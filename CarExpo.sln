@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarExpo", "CarExpo\CarExpo.csproj", "{3C56A23C-48EF-4E17-A854-55A771680711}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarExpo.Application", "CarExpo.Application\CarExpo.Application.csproj", "{BBDBD308-3C71-4C95-A5D7-AE88FB4A8B6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarExpo.Infrastructure", "CarExpo.Infrastructure\CarExpo.Infrastructure.csproj", "{6649676F-B13A-4F9C-AFC2-7F1B606B81A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarExpo.Domain", "CarExpo.Domain\CarExpo.Domain.csproj", "{27FA7161-7120-416B-854A-3901C774F776}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C56A23C-48EF-4E17-A854-55A771680711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C56A23C-48EF-4E17-A854-55A771680711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C56A23C-48EF-4E17-A854-55A771680711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C56A23C-48EF-4E17-A854-55A771680711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBDBD308-3C71-4C95-A5D7-AE88FB4A8B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBDBD308-3C71-4C95-A5D7-AE88FB4A8B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBDBD308-3C71-4C95-A5D7-AE88FB4A8B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBDBD308-3C71-4C95-A5D7-AE88FB4A8B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6649676F-B13A-4F9C-AFC2-7F1B606B81A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6649676F-B13A-4F9C-AFC2-7F1B606B81A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6649676F-B13A-4F9C-AFC2-7F1B606B81A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6649676F-B13A-4F9C-AFC2-7F1B606B81A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27FA7161-7120-416B-854A-3901C774F776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FA7161-7120-416B-854A-3901C774F776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FA7161-7120-416B-854A-3901C774F776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FA7161-7120-416B-854A-3901C774F776}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
