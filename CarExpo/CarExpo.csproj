@@ -14,4 +14,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarExpo.Infrastructure\CarExpo.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

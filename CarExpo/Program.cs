@@ -1,4 +1,7 @@
 
+using CarExpo.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+
 namespace CarExpo
 {
     public class Program
@@ -6,6 +9,9 @@ namespace CarExpo
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<DataBaseContext>(option =>
+              option.UseSqlServer(builder.Configuration.GetConnectionString("CarExpo")));
 
             // Add services to the container.
 

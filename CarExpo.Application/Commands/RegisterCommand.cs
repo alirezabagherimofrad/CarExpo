@@ -18,5 +18,7 @@ namespace CarExpo.Application.Commands
 
         
         public string Email { get; set; }
+       
+       
     }
 }
