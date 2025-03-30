@@ -45,6 +45,5 @@ namespace CarExpo.Domain.Models.Users
 
             return OtpCode.ToString();
         }
-
     }
 }

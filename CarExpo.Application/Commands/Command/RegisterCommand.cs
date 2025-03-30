@@ -1,24 +1,21 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Commands
+namespace CarExpo.Application.Commands.Command
 {
     public class RegisterCommand
     {
-        [Required(ErrorMessage = "لطفا فیلد نام را پرکنید")]
 
         public string UserName { get; set; }
 
-        [Required(ErrorMessage ="لطفا فیلد پسورد را پرکنید")]
         public string Password { get; set; }
 
-        
         public string Email { get; set; }
-       
-       
+
     }
 }

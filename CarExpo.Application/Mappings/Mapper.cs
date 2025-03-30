@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using CarExpo.Application.Commands;
+using CarExpo.Application.Commands.Command;
+using CarExpo.Application.Dto;
 using CarExpo.Application.Services;
 using CarExpo.Domain.Models.Users;
 using System;
@@ -15,6 +16,8 @@ namespace CarExpo.Application.Mappings
         public Mapper()
         {
             CreateMap<User, RegisterCommand>().ReverseMap();
+
+            CreateMap<RegisterCommand, RegisterDto>().ReverseMap();
 
 
         }
