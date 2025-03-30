@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace CarExpo.Infrastructure.Context
 {
-    public class DataBaseContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+public class DataBaseContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+{
+    public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
     {
-        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
-        {
 
-        }
+    }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
         {
-            if (!optionsBuilder.IsConfigured)
+            optionsBuilder.UseSqlServer("Server=DESKTOP-BO3LEGK\\MSSQLSERVER01;Database=CarExpo;Trusted_Connection=True;TrustServerCertificate=True;", builder =>
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-BO3LEGK\\MSSQLSERVER01;Database=CarExpo;Trusted_Connection=True;TrustServerCertificate=True;", builder =>
-                {
-                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-                });
-            }
+                builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            });
         }
     }
+}
 }
