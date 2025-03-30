@@ -14,12 +14,13 @@ namespace CarExpo.Domain.Models.Users
 
         }
 
-        public User(string userName, string password, string phoneNumber)
+        public User(string userName, string password, string phoneNumber, string email)
         {
             Id = Guid.NewGuid();
             UserName = userName;
             PhoneNumber = phoneNumber;
             Password = password;
+            Email = email;
         }
 
         public Guid Id { get; set; }

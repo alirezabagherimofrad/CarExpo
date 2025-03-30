@@ -1,4 +1,4 @@
-﻿using CarExpo.Domain.Models.Customers;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace CarExpo.Domain.Models.Orders
 
         public Guid CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
+        //public Customer Customer { get; set; }
 
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
