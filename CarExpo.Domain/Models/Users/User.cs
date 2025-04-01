@@ -14,13 +14,13 @@ namespace CarExpo.Domain.Models.Users
 
         }
 
-        public User(string userName, string password, string phoneNumber, string email)
+        public User(string password, string phoneNumber, string email)
         {
             Id = Guid.NewGuid();
-            UserName = userName;
+            Email = email;
+            UserName = email;
             PhoneNumber = phoneNumber;
             Password = password;
-            Email = email;
         }
 
         public Guid Id { get; set; }
@@ -33,11 +33,11 @@ namespace CarExpo.Domain.Models.Users
 
         public DateTime? BirthDate { get; set; }
 
-        public string NationalCode { get; set; }
+        public string ? NationalCode { get; set; }
 
-        public int Otp { get; set; }
+        public string ? Otp { get; set; }
 
-        public DateTime OtpExpiration { get; set; }
+        public DateTime ? OtpExpiration { get; set; }
 
         public string OtpGenerator()
         {

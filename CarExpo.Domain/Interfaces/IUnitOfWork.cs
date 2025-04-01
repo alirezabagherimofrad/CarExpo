@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarExpo.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace CarExpo.Infrastructure;
 public interface IUnitOfWork : IDisposable
 {
     IGenericRepository<T> Repository<T>() where T : class;
+    IUserRepository UserRepository { get; }
     Task<int> SaveChangesAsync();
 }
 

@@ -1,4 +1,4 @@
-﻿using CarExpo.Application.Commands.Command;
+﻿using CarExpo.Application.Commands.Command.UserCommand;
 using CarExpo.Application.Dto;
 using CarExpo.Domain.Models.Users;
 using System;
@@ -11,7 +11,15 @@ namespace CarExpo.Application.Interfaces
 {
     public interface IuserService
     {
-        Task<User> RegisterAsync(RegisterCommand registerCommand);
+        Task<RegisterDto> RegisterAsync(RegisterCommand registerCommand);
+
+        Task<User> UpdateAsync(User user);
+
+        Task<User> UpdateUserInfo(UpdateUserInformatiobCommand updateUserInfoCommand);
+
+        Task<User?> ResetPassword(ResetPasswordCommand resetPasswordCommand);
+
+        Task<User?> RecoverPassword(RecoverPasswordCommand recoverPasswordCommand);
 
     }
 }

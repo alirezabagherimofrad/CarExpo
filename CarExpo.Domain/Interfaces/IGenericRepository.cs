@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CarExpo.Domain.Models.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,10 +10,10 @@ namespace  CarExpo.Infrastructure;
 
 public interface IGenericRepository<T> where T : class
 {
-    Task<T> GetByIdAsync(Guid id);
+    Task<T?> GetByIdAsync(Guid id);
     Task<List<T>> GetAllAsync();
     Task AddAsync(T entity);
-    Task UpdateAsync(T entity);
+    Task<T> UpdateAsync(T entity);
     Task DeleteAsync(T entity);
 }
 

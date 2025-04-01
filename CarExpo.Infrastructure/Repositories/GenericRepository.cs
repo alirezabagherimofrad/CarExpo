@@ -1,20 +1,23 @@
 ﻿
+using CarExpo.Domain.Models.Users;
 using CarExpo.Infrastructure;
+using CarExpo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Repositories;
+namespace CarExpo.Infrastructure.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository <T> : IGenericRepository <T> where T : class
 {
 
-    protected readonly DbContext _context;
+    protected readonly DataBaseContext _context;
     protected readonly DbSet<T> _dbSet;
-    public GenericRepository(DbContext context)
+    public GenericRepository(DataBaseContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();
@@ -38,16 +41,19 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     }
 
-    public async Task<T> GetByIdAsync(Guid id)
+    public async Task<T?> GetByIdAsync(Guid id)
     {
         return await _dbSet.FindAsync(id.ToString());
 
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task<T> UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
         await _context.SaveChangesAsync();
+        return entity;
     }
+
+
 }
 
