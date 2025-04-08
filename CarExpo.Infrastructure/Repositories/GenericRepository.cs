@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 
 namespace CarExpo.Infrastructure.Repositories;
 
-public class GenericRepository <T> : IGenericRepository <T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-
     protected readonly DataBaseContext _context;
     protected readonly DbSet<T> _dbSet;
     public GenericRepository(DataBaseContext context)
@@ -43,7 +42,7 @@ public class GenericRepository <T> : IGenericRepository <T> where T : class
 
     public async Task<T?> GetByIdAsync(Guid id)
     {
-        return await _dbSet.FindAsync(id.ToString());
+        return await _dbSet.FindAsync(id);
 
     }
 
@@ -53,7 +52,5 @@ public class GenericRepository <T> : IGenericRepository <T> where T : class
         await _context.SaveChangesAsync();
         return entity;
     }
-
-
 }
 

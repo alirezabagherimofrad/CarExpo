@@ -6,7 +6,7 @@ namespace CarExpo.Controllers
 {
     [ApiController]
     [Route("api/User/[Controller]")]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly IuserService _userService;
         private readonly IOtpService _otpService;
@@ -19,56 +19,34 @@ namespace CarExpo.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterCommand registerCommand)
         {
-            try
-            {
-                registerCommand.Validate();
+            registerCommand.Validate();
 
-                var result = await _userService.RegisterAsync(registerCommand);
+            var result = await _userService.RegisterAsync(registerCommand);
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("SendOtp")]
         public async Task<IActionResult> SendOtpAsync([FromBody] SendOtpCommand sendOtpCommand)
         {
-            try
-            {
-                var userotp = await _otpService.SendOtp(sendOtpCommand);
+            var userotp = await _otpService.SendOtp(sendOtpCommand);
 
-                return Ok("کد یکبار مصرف با موفقیت ارسال شد");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok("کد یکبار مصرف با موفقیت ارسال شد");
         }
 
         [HttpPost("VerifyOtp")]
         public async Task<IActionResult> VerifyOtpCodeAsync([FromBody] VerifyOtpCommand verifyOtpCommand)
         {
-            try
-            {
-                var userverify = await _otpService.VerifyOtp(verifyOtpCommand);
+            var userverify = await _otpService.VerifyOtp(verifyOtpCommand);
 
-                return Ok("رمز یکبار مصرف درست وارد شد");
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
+            return Ok("رمز یکبار مصرف درست وارد شد");
         }
 
         [HttpPut("UpdateUserInfo")]
         public async Task<IActionResult> UpdateUserInfo([FromBody] UpdateUserInformatiobCommand updateUserInfoCommand)
         {
             var user = await _userService.UpdateUserInfo(updateUserInfoCommand);
+
             return Ok("اطلاعات کاربر با موفقیت به روز رسانی شد");
         }
 
@@ -76,6 +54,7 @@ namespace CarExpo.Controllers
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordCommand resetPasswordCommand)
         {
             var user = await _userService.ResetPassword(resetPasswordCommand);
+
             return Ok("بازنشانی رمز عبور با موفقیت انجام شد");
         }
 
@@ -83,8 +62,9 @@ namespace CarExpo.Controllers
         public async Task<IActionResult> RecoverPasswordAsync(RecoverPasswordCommand recoverPasswordCommand)
         {
             var user = await _userService.RecoverPassword(recoverPasswordCommand);
+
             return Ok("بازیابی رمز عبور شما با موفقیت انجام شد");
         }
-        
+
     }
 }

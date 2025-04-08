@@ -1,4 +1,5 @@
-﻿using CarExpo.Application.Commands.CommandValidation;
+﻿
+using CarExpo.Application.Commands.CommandValidator.UserCommandValidator;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

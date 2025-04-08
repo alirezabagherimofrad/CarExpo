@@ -1,6 +1,7 @@
 ﻿
 using CarExpo.Domain.Interfaces;
 using CarExpo.Domain.Models.Users;
+using CarExpo.Domain.Models.Vehicles;
 using CarExpo.Infrastructure;
 using CarExpo.Infrastructure.Context;
 using System;
@@ -16,7 +17,8 @@ public class UnitOfWork : IUnitOfWork
     private readonly DataBaseContext _context;
     private readonly Dictionary<Type, object> _repositories = new();
     private IUserRepository? _userRepository;
-
+    private IVehicleRepository? _vehicleRepository;
+    private ICarImageRepository? _carImageRepository;
     public UnitOfWork(DataBaseContext context)
     {
         _context = context;
@@ -27,10 +29,31 @@ public class UnitOfWork : IUnitOfWork
         get
         {
             if (_userRepository == null)
-            {
                 _userRepository = new UserRepository(_context);
-            }
+
             return _userRepository;
+        }
+    }
+
+    public IVehicleRepository VehicleRepository
+    {
+        get
+        {
+            if (_vehicleRepository == null)
+                _vehicleRepository = new VehicleRepository(_context);
+
+            return _vehicleRepository;
+        }
+    }
+
+    public ICarImageRepository CarImageRepository
+    {
+        get
+        {
+            if (_carImageRepository == null)
+                _carImageRepository = new CarImageRepository(_context);
+
+            return _carImageRepository;
         }
     }
 
@@ -45,6 +68,18 @@ public class UnitOfWork : IUnitOfWork
         {
             _userRepository ??= new UserRepository(_context);
             return (IGenericRepository<T>)_userRepository;
+        }
+
+        if (typeof(T) == typeof(Car))
+        {
+            _vehicleRepository ??= new VehicleRepository(_context);
+            return (IGenericRepository<T>)_vehicleRepository;
+        }
+
+        if (typeof(T) == typeof(CarImage))
+        {
+            _carImageRepository ??= new CarImageRepository(_context);
+            return (IGenericRepository<T>)_carImageRepository;
         }
 
         if (!_repositories.ContainsKey(typeof(T)))

@@ -11,6 +11,8 @@ public interface IUnitOfWork : IDisposable
 {
     IGenericRepository<T> Repository<T>() where T : class;
     IUserRepository UserRepository { get; }
+    IVehicleRepository VehicleRepository { get; }
+    ICarImageRepository CarImageRepository { get; }
     Task<int> SaveChangesAsync();
 }
 

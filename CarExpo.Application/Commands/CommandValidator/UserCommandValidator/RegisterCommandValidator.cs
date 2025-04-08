@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Commands.CommandValidation
+namespace CarExpo.Application.Commands.CommandValidator.UserCommandValidator
 {
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
@@ -35,11 +35,11 @@ namespace CarExpo.Application.Commands.CommandValidation
             .Matches("[A-Z]").WithMessage("رمز عبور باید حداقل یک حرف بزرگ انگلیسی داشته باشد.")
             .Matches("[a-z]").WithMessage("رمز عبور باید حداقل یک حرف کوچک انگلیسی داشته باشد.")
             .Matches(@"\d").WithMessage("رمز عبور باید حداقل یک عدد داشته باشد.")
-            .Matches(@"[!@#$%^&*(),.?""{}|<>]").WithMessage("رمز عبور باید حداقل یک کاراکتر ویژه داشته باشد.");
+            .Matches(@"[!@#$%^&*(),.?""{}|<>]").WithMessage("رمز عبور باید حداقل یک کاراکتر خاص داشته باشد.");
 
             RuleFor(x => x.PhoneNumber).NotNull().WithMessage("شماره را وارد کنید")
            .Matches(new Regex(@"^(?:(?:\+98)|(?:0))9\d{9}$"))
-           .WithMessage("شماره تلفن وارد شده صحیح نیست. لطفاً شماره تلفن ایران را به درستی وارد کنید.");
+           .WithMessage("شماره تلفن وارد شده صحیح نیست لطفا شماره درست وارد کنید");
 
         }
     }

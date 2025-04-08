@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Services
+namespace CarExpo.Application.Services.USER_SERVICE
 {
     public class OtpService : IOtpService
     {

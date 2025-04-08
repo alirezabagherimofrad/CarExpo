@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Services
+namespace CarExpo.Application.Services.USER_SERVICE
 {
 
     public class UserService : IuserService
@@ -32,45 +32,30 @@ namespace CarExpo.Application.Services
 
         public async Task<RegisterDto> RegisterAsync(RegisterCommand registerCommand)
         {
-            // اعتبارسنجی ورودی‌ها
             registerCommand.Validate();
 
-            // بررسی ایمیل و شماره موبایل تکراری
             var emailExists = await _unitOfWork.UserRepository.IsExistAsync(u => u.Email == registerCommand.Email);
             if (emailExists)
                 throw new Exception("این ایمیل قبلاً ثبت شده است.");
 
             var phoneExists = await _unitOfWork.UserRepository.IsExistAsync(u => u.PhoneNumber == registerCommand.PhoneNumber);
+
             if (phoneExists)
                 throw new Exception("این شماره موبایل قبلاً ثبت شده است.");
 
-            // تبدیل RegisterCommand به User
             var user = _mapper.Map<User>(registerCommand);
 
             user.UserName = registerCommand.Email;
             user.NormalizedEmail = registerCommand.Email.ToUpper();
             user.NormalizedUserName = registerCommand.Email.ToUpper();
-
-            // هش کردن پسورد با UserManager
             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, registerCommand.Password);
 
-            try
-            {
-          
-                var createdUser = await _unitOfWork.UserRepository.RegisterAsync(user);
+            var createdUser = await _unitOfWork.UserRepository.RegisterAsync(user);
 
-                var registerDto = _mapper.Map<RegisterDto>(createdUser);
+            var registerDto = _mapper.Map<RegisterDto>(createdUser);
 
-                return registerDto;
-            }
-            catch (DbUpdateException dbEx)
-            {
-                throw new Exception($"خطای پایگاه داده: {dbEx.Message}", dbEx.InnerException);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"خطای داخلی هنگام ذخیره اطلاعات: {ex.Message}", ex.InnerException);
-            }
+            return registerDto;
+
         }
 
 

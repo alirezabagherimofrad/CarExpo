@@ -47,7 +47,7 @@ namespace CarExpo.Infrastructure.Repositories
             return await _dbSet.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
         }
 
-        public async Task<User> RegisterAsync(User user)
+        public async Task<User?> RegisterAsync(User user)
         {
             _context.Users.AddAsync(user);
 

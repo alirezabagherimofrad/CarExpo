@@ -24,6 +24,6 @@ namespace CarExpo.Domain.Interfaces
 
         Task<User?> RecoverPasswordAsync(string phoneNumber);
 
-        Task <User> RegisterAsync(User user);
+        Task <User?> RegisterAsync(User user);
     }
 }

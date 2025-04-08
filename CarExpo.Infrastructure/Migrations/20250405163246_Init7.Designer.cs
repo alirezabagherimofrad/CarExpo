@@ -4,6 +4,7 @@ using CarExpo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarExpo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250405163246_Init7")]
+    partial class Init7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,8 +123,9 @@ namespace CarExpo.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CarStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("CarStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -136,15 +140,11 @@ namespace CarExpo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Mileage")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Salestatus")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -157,9 +157,7 @@ namespace CarExpo.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cars", (string)null);
-
-                    b.UseTptMappingStrategy();
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("CarExpo.Domain.Models.Vehicles.CarImage", b =>
@@ -317,97 +315,6 @@ namespace CarExpo.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.BahmanMotor", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("BahmanMotor", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Brilliance", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Brilliance", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Chery", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Chery", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Hyundai", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Hyundai", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.JAC", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("JAC", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.KermanMotor", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("KermanMotor");
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Kia", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Kia", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Lifan", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Lifan", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.ModiranKhodro", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("ModiranKhodro", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.ParsKhodro", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("ParsKhodro", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Peugeot", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Peugeot", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Renault", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Renault", (string)null);
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Saipa", b =>
-                {
-                    b.HasBaseType("CarExpo.Domain.Models.Vehicles.Car");
-
-                    b.ToTable("Saipa", (string)null);
-                });
-
             modelBuilder.Entity("CarExpo.Domain.Models.Vehicles.Car", b =>
                 {
                     b.HasOne("CarExpo.Domain.Models.Users.User", "User")
@@ -477,123 +384,6 @@ namespace CarExpo.Infrastructure.Migrations
                     b.HasOne("CarExpo.Domain.Models.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.BahmanMotor", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.BahmanMotor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Brilliance", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Brilliance", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Chery", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Chery", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Hyundai", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Hyundai", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.JAC", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.JAC", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.KermanMotor", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.KermanMotor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Kia", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Kia", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Lifan", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Lifan", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.ModiranKhodro", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.ModiranKhodro", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.ParsKhodro", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.ParsKhodro", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Peugeot", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Peugeot", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Renault", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Renault", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CarExpo.Domain.Models.CarBrands.Saipa", b =>
-                {
-                    b.HasOne("CarExpo.Domain.Models.Vehicles.Car", null)
-                        .WithOne()
-                        .HasForeignKey("CarExpo.Domain.Models.CarBrands.Saipa", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using CarExpo.Domain.Models.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace CarExpo.Domain.Models.Users
             UserName = email;
             PhoneNumber = phoneNumber;
             Password = password;
+            Cars = new List<Car>();
         }
 
         public Guid Id { get; set; }
@@ -33,11 +35,11 @@ namespace CarExpo.Domain.Models.Users
 
         public DateTime? BirthDate { get; set; }
 
-        public string ? NationalCode { get; set; }
+        public string? NationalCode { get; set; }
 
-        public string ? Otp { get; set; }
+        public string? Otp { get; set; }
 
-        public DateTime ? OtpExpiration { get; set; }
+        public DateTime? OtpExpiration { get; set; }
 
         public string OtpGenerator()
         {
@@ -45,5 +47,6 @@ namespace CarExpo.Domain.Models.Users
 
             return OtpCode.ToString();
         }
+        public ICollection<Car> Cars { get; set; }
     }
 }
