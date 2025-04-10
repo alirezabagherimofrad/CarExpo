@@ -1,5 +1,6 @@
 ﻿
 using CarExpo.Application.Commands.CommandValidator.VehicleCommandValidator;
+using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Vehicles;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace CarExpo.Application.Commands.Command.VehicleCommand
     {
         public Guid UserId { get; set; }
 
-        public string Brand { get; set; }
+        //public string Brand { get; set; }
+
+        public Guid BrandId { get; set; }
 
         public string Model { get; set; }
 
@@ -30,6 +33,10 @@ namespace CarExpo.Application.Commands.Command.VehicleCommand
         public CarStatus? CarStatus { get; set; }
 
         public salestatus? salestatus { get; set; }
+
+        public string? TotalPrice { get; set; }
+
+
 
         public void Validate()
         {

@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Domain.Models.CarBrands
+namespace CarExpo.Domain.Models.Brands
 {
-    public class Kia : Car
+    public class Brand
     {
+        public Guid Id { get; set; } 
 
+        public string Title { get; set; }
     }
 }

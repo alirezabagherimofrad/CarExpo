@@ -34,6 +34,7 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
 
                 throw new Exception("ماشینی با این آیدی پیدا نشد");
             }
+
             var directoryPath = "C:\\Users\\LENOVO\\Documents\\carimage";
 
             if (!Directory.Exists(directoryPath))
@@ -48,7 +49,6 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
 
             await _unitOfWork.CarImageRepository.AddAsync(carImage);
         }
-
 
         public async Task<FileContentResult> DownloadCarImageAsync(DownloadCarImageCommand carDownloadImageCommand)
         {

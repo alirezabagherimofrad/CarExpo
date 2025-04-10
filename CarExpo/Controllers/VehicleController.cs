@@ -34,10 +34,10 @@ namespace CarExpo.Controllers
             return Ok(result);
         }
 
-        [HttpGet("SearchCar")]
-        public async Task<IActionResult> SearchCarAsync([FromQuery] CarSearchCommand carSearchCommand)
+        [HttpGet("FilterCar")]
+        public async Task<IActionResult> FilterCarAsync([FromQuery] FilterCarCommand filterCarCommand)
         {
-            var Car = await _vehicleService.FilterCars(carSearchCommand);
+            var Car = await _vehicleService.FilterCars(filterCarCommand);
 
             if (Car == null)
                 return BadRequest("هیچ ماشینی با این مشخصات پیدا نشد");

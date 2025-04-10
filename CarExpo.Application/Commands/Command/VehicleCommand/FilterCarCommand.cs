@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarExpo.Application.Commands.Command.VehicleCommand
 {
-    public class CarSearchCommand
+    public class FilterCarCommand
     {
         public string? Brand { get; set; }
 
@@ -20,6 +20,8 @@ namespace CarExpo.Application.Commands.Command.VehicleCommand
         public decimal? Mileage { get; set; }
 
         public CarStatus? CarStatus { get; set; }
+
+        public salestatus? Salestatus { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using CarExpo.Domain.Models.Users;
+﻿using CarExpo.Domain.Models.Brands;
+using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
 using CarExpo.Infrastructure;
 using System;
@@ -19,5 +20,8 @@ namespace CarExpo.Domain.Interfaces
         Task<Car> EditCarInfoAsyncc(Car car);
 
         Task<List<Car>> FilterCarsAsync(string? Brand, string? Model, string? Color, string? ManufactureYear, decimal? Mileage, CarStatus? CarStatus);
+
+        Task<Brand> GetByBrand(Guid Id);
+        Task AddBrandAsync(Brand brand);
     }
 }

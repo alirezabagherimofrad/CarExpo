@@ -47,6 +47,6 @@ namespace CarExpo.Domain.Models.Users
 
             return OtpCode.ToString();
         }
-        public ICollection<Car> Cars { get; set; }
+        public List<Car> Cars { get; set; }
     }
 }

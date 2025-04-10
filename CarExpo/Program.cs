@@ -15,6 +15,7 @@ using CarExpo.Application.Commands.CommandValidator.UserCommandValidator;
 using CarExpo.Application.Commands.CommandValidator.VehicleCommandValidator;
 using CarExpo.FilterException;
 using Microsoft.AspNetCore.Mvc.Filters;
+using CarExpo.Application.Services.Order_Service;
 
 
 namespace CarExpo
@@ -28,13 +29,14 @@ namespace CarExpo
             builder.Services.AddDbContext<DataBaseContext>(option =>
               option.UseSqlServer(builder.Configuration.GetConnectionString("CarExpo")));
 
+
             builder.Services.AddValidatorsFromAssemblyContaining<RegisterCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<AddCarCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<EditCarInfoCommandValidator>();
 
             builder.Services.AddAutoMapper(typeof(UserMapper));
             builder.Services.AddAutoMapper(typeof(VehicleMapper));
-
+            builder.Services.AddAutoMapper(typeof(OrderMapper));
 
             builder.Services.AddIdentityCore<User>(options =>
             {
@@ -56,7 +58,6 @@ namespace CarExpo
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
             builder.Services.AddScoped<ICarImageService, CarImageService>();
             builder.Services.AddScoped<ICarImageRepository, CarImageRepository>();
 
@@ -66,6 +67,9 @@ namespace CarExpo
             builder.Services.AddScoped<IuserService, UserService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IOtpService, OtpService>();
+
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

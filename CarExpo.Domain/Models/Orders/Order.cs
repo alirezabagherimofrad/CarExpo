@@ -9,11 +9,15 @@ namespace CarExpo.Domain.Models.Orders
 {
     public class Order
     {
+        public Order()
+        {
+            Id = Guid.NewGuid();
+            OrderTime = DateTime.Now;
+        }
+
         public Guid Id { get; set; }
 
-        public Guid CustomerId { get; set; }
-
-        //public Customer Customer { get; set; }
+        public Guid CarId { get; set; }
 
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
@@ -22,7 +26,5 @@ namespace CarExpo.Domain.Models.Orders
         public DateTime OrderTime { get; set; }
 
         public bool IsPaid { get; set; }
-
-
     }
 }

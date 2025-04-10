@@ -1,5 +1,6 @@
 ﻿
 using CarExpo.Domain.Interfaces;
+using CarExpo.Domain.Models.Orders;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
 using CarExpo.Infrastructure;
@@ -19,6 +20,7 @@ public class UnitOfWork : IUnitOfWork
     private IUserRepository? _userRepository;
     private IVehicleRepository? _vehicleRepository;
     private ICarImageRepository? _carImageRepository;
+    private IOrderRepository? _orderRepository;
     public UnitOfWork(DataBaseContext context)
     {
         _context = context;
@@ -57,6 +59,17 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
+    public IOrderRepository OrderRepository
+    {
+        get
+        {
+            if (_orderRepository == null)
+                _orderRepository = new OrderRepository(_context);
+
+            return _orderRepository;
+        }
+    }
+
     public void Dispose()
     {
         _context.Dispose();
@@ -80,6 +93,12 @@ public class UnitOfWork : IUnitOfWork
         {
             _carImageRepository ??= new CarImageRepository(_context);
             return (IGenericRepository<T>)_carImageRepository;
+        }
+
+        if (typeof(T) == typeof(Order))
+        {
+            _orderRepository ??= new OrderRepository(_context);
+            return (IGenericRepository<T>)_orderRepository;
         }
 
         if (!_repositories.ContainsKey(typeof(T)))

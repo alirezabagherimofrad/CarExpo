@@ -4,12 +4,15 @@ using CarExpo.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CarExpo.Domain.Models.CarBrands;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using CarExpo.Domain.Models.Brands;
+using CarExpo.Domain.Models.Orders;
 
 namespace CarExpo.Infrastructure.Context
 {
@@ -19,46 +22,56 @@ namespace CarExpo.Infrastructure.Context
         {
 
         }
+
         public DbSet<Car> Cars { get; set; }
-
-        public DbSet<BahmanMotor> BahmanMotor { get; set; }
-
-        public DbSet<Brilliance> Brilliance { get; set; }
-
-        public DbSet<Chery> Chery { get; set; }
-
-        public DbSet<Hyundai> Hyundaie { get; set; }
-
-        public DbSet<JAC> Jac { get; set; }
-
-        public DbSet<KermanMotor> KermanMotor { get; set; }
-
-        public DbSet<Kia> Kia { get; set; }
-
-        public DbSet<Lifan> Lifan { get; set; }
-
-        public DbSet<ModiranKhodro> ModiranKhodro { get; set; }
-
-        public DbSet<ParsKhodro> ParsKhodro { get; set; }
-
-        public DbSet<Peugeot> Peugeot { get; set; }
-
-        public DbSet<Renault> Renault { get; set; }
-
-        public DbSet<Saipa> Saipa { get; set; }
-
         public DbSet<CarImage> CarImages { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Car>()
-            .HasOne(c => c.User)
-            .WithMany(c => c.Cars)
-            .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityUserLogin<Guid>>()
+           .HasKey(l => new { l.LoginProvider, l.ProviderKey });
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>()
+            .HasKey(r => new { r.UserId, r.RoleId });
+
+            modelBuilder.Entity<IdentityUserToken<Guid>>()
+            .HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
+
+            modelBuilder.Entity<Brand>().HasData(
+                new Brand { Id = Guid.NewGuid(), Title = "Saipa" },
+                new Brand { Id = Guid.NewGuid(), Title = "Kia" },
+                new Brand { Id = Guid.NewGuid(), Title = "Peugeot" },
+                new Brand { Id = Guid.NewGuid(), Title = "Hyundai" },
+                new Brand { Id = Guid.NewGuid(), Title = "Chery" },
+                new Brand { Id = Guid.NewGuid(), Title = "Brilliance" },
+                new Brand { Id = Guid.NewGuid(), Title = "Renault" },
+                new Brand { Id = Guid.NewGuid(), Title = "Lifan" },
+                new Brand { Id = Guid.NewGuid(), Title = "JAC" },
+                new Brand { Id = Guid.NewGuid(), Title = "BahmanMotor" },
+                new Brand { Id = Guid.NewGuid(), Title = "ParsKhodro" },
+                new Brand { Id = Guid.NewGuid(), Title = "ModiranKhodro" },
+                new Brand { Id = Guid.NewGuid(), Title = "KermanMotor" }
+            );
+
+            modelBuilder.Entity<Car>()
+            .Property(c => c.BrandId)
+            .HasColumnType("uniqueidentifier");
+
+            modelBuilder.Entity<Car>()
+            .HasOne(c => c.Brand);
+            //.WithMany(c=>c.Cars)
+            //.HasForeignKey(c => c.BrandId)
+
+            modelBuilder.Entity<Car>()
+           .HasOne(c => c.User)
+           .WithMany(c => c.Cars)
+           .HasForeignKey(c => c.UserId)
+           .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<CarImage>()
            .HasOne(c => c.Car)
            .WithMany(c => c.CarImages)
@@ -67,57 +80,6 @@ namespace CarExpo.Infrastructure.Context
             modelBuilder.Entity<Car>()
            .Property(c => c.Mileage)
            .HasPrecision(18, 2); // یعنی 18 رقم عدد، 2 رقم اعشار
-
-
-            modelBuilder.Entity<Car>().ToTable("Cars");
-
-            modelBuilder.Entity<BahmanMotor>()
-            .ToTable("BahmanMotor")
-            .HasBaseType<Car>();
-
-            modelBuilder.Entity<Brilliance>()
-                .ToTable("Brilliance")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Chery>()
-                .ToTable("Chery")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Hyundai>()
-                .ToTable("Hyundai")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<JAC>()
-                .ToTable("JAC")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Kia>()
-                .ToTable("Kia")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Lifan>()
-                .ToTable("Lifan")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<ModiranKhodro>()
-                .ToTable("ModiranKhodro")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<ParsKhodro>()
-                .ToTable("ParsKhodro")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Peugeot>()
-                .ToTable("Peugeot")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Renault>()
-                .ToTable("Renault")
-                .HasBaseType<Car>();
-
-            modelBuilder.Entity<Saipa>()
-                .ToTable("Saipa")
-                .HasBaseType<Car>();
         }
     }
 }

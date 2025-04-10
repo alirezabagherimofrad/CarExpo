@@ -1,4 +1,5 @@
 ﻿using CarExpo.Domain.Interfaces;
+using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
 using CarExpo.Infrastructure.Context;
@@ -45,7 +46,7 @@ namespace CarExpo.Infrastructure.Repositories
             var search = _context.Cars.AsQueryable();
 
             if (!string.IsNullOrEmpty(Brand))
-                search = search.Where(c => c.Brand == Brand);
+                search = search.Where(c => c.Brand.Title == Brand);
 
             if (!string.IsNullOrEmpty(Model))
                 search = search.Where(c => c.Model == Model);
@@ -63,6 +64,22 @@ namespace CarExpo.Infrastructure.Repositories
                 search = search.Where(c => c.CarStatus == CarStatus);
 
             return await search.ToListAsync();
+        }
+
+        public async Task<Brand> GetByBrand(Guid Id)
+        {
+            var brand = await _context.Set<Brand>().FirstOrDefaultAsync(b => b.Id == Id);
+            if (brand == null)
+            {
+                throw new Exception("Brand not found.");
+            }
+            return brand;
+        }
+
+        public async Task AddBrandAsync(Brand brand)
+        {
+            _context.Set<Brand>().Add(brand);
+            await _context.SaveChangesAsync();
         }
     }
 }

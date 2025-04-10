@@ -1,4 +1,5 @@
 ﻿using CarExpo.Application.Commands.Command.VehicleCommand;
+using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Vehicles;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,9 @@ namespace CarExpo.Application.Interfaces
 
         Task<Car> UpdateInfoCar(EditCarInfoCommand editCarInfoCommand);
 
-        Task<List<Car>> FilterCars(CarSearchCommand carSearchCommand);
+        Task<List<Car>> FilterCars(FilterCarCommand carSearchCommand);
+
+        Task<Brand> BrandAsync(Brand brand);
 
     }
 }

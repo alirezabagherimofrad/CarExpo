@@ -13,6 +13,7 @@ public interface IUnitOfWork : IDisposable
     IUserRepository UserRepository { get; }
     IVehicleRepository VehicleRepository { get; }
     ICarImageRepository CarImageRepository { get; }
+    IOrderRepository OrderRepository { get; }
     Task<int> SaveChangesAsync();
 }
 

@@ -1,4 +1,5 @@
-﻿using CarExpo.Domain.Models.Users;
+﻿using CarExpo.Domain.Models.Brands;
+using CarExpo.Domain.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace CarExpo.Domain.Models.Vehicles
         {
             Id = Guid.NewGuid();
             CarImages = new List<CarImage>();
+            CreatedAt = DateTime.Now;
         }
 
         public Guid Id { get; set; }
@@ -21,7 +23,7 @@ namespace CarExpo.Domain.Models.Vehicles
 
         public User User { get; set; }
 
-        public string Brand { get; set; }
+        //public string brand { get; set; }
 
         public string Model { get; set; }
 
@@ -39,7 +41,15 @@ namespace CarExpo.Domain.Models.Vehicles
 
         public salestatus? Salestatus { get; set; }
 
-        public ICollection<CarImage> CarImages { get; set; }
+        public Guid BrandId { get; set; }
+
+        public string? TotalPrice { get; set; }
+
+        public Brand Brand { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public List<CarImage> CarImages { get; set; }
 
     }
     public enum CarStatus
@@ -52,5 +62,6 @@ namespace CarExpo.Domain.Models.Vehicles
         Purchased,
         NotSold,
         Unavailable,
+        pendingreview
     }
 }

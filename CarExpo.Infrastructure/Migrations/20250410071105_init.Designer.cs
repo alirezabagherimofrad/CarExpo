@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarExpo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20250407062823_Init10")]
-    partial class Init10
+    [Migration("20250410071105_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,88 @@ namespace CarExpo.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CarExpo.Domain.Models.Brands.Brand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brand");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9f5d1d3f-bd5d-4a49-8946-5d5f4b43326b"),
+                            Title = "Saipa"
+                        },
+                        new
+                        {
+                            Id = new Guid("e60b9cda-45ea-460f-b2fe-e22be64527d4"),
+                            Title = "Kia"
+                        },
+                        new
+                        {
+                            Id = new Guid("d6f32047-aed8-46cd-9db0-b76213e4e091"),
+                            Title = "Peugeot"
+                        },
+                        new
+                        {
+                            Id = new Guid("7643c421-5bf6-40b5-abb0-111bad1d4014"),
+                            Title = "Hyundai"
+                        },
+                        new
+                        {
+                            Id = new Guid("62c282d2-d94f-46fd-b2ad-425787274b7f"),
+                            Title = "Chery"
+                        },
+                        new
+                        {
+                            Id = new Guid("ec746d11-62fc-4ce0-a2a9-f6ab0ec3bc2a"),
+                            Title = "Brilliance"
+                        },
+                        new
+                        {
+                            Id = new Guid("26dbe990-c861-49f1-8e81-938a44985b25"),
+                            Title = "Renault"
+                        },
+                        new
+                        {
+                            Id = new Guid("a05e4bba-15ce-403e-8f12-302c78d9eb9a"),
+                            Title = "Lifan"
+                        },
+                        new
+                        {
+                            Id = new Guid("9cbac66c-6f8e-43fa-954f-4a4e29c74fe9"),
+                            Title = "JAC"
+                        },
+                        new
+                        {
+                            Id = new Guid("c2d61c82-73a0-4701-a608-06f27ec88f50"),
+                            Title = "BahmanMotor"
+                        },
+                        new
+                        {
+                            Id = new Guid("94b8b8ff-786d-47e2-a6f1-f91b83441744"),
+                            Title = "ParsKhodro"
+                        },
+                        new
+                        {
+                            Id = new Guid("323cf4f5-2d16-4876-ba5a-6b6e7ac25e4b"),
+                            Title = "ModiranKhodro"
+                        },
+                        new
+                        {
+                            Id = new Guid("1c5ccaeb-1926-472b-8b74-4a57cfd38cee"),
+                            Title = "KermanMotor"
+                        });
+                });
 
             modelBuilder.Entity("CarExpo.Domain.Models.Users.User", b =>
                 {
@@ -119,11 +201,10 @@ namespace CarExpo.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CarStatus")
+                    b.Property<int?>("CarStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Color")
@@ -139,11 +220,15 @@ namespace CarExpo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Mileage")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Salestatus")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -153,6 +238,8 @@ namespace CarExpo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("UserId");
 
@@ -316,11 +403,19 @@ namespace CarExpo.Infrastructure.Migrations
 
             modelBuilder.Entity("CarExpo.Domain.Models.Vehicles.Car", b =>
                 {
+                    b.HasOne("CarExpo.Domain.Models.Brands.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarExpo.Domain.Models.Users.User", "User")
                         .WithMany("Cars")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("User");
                 });

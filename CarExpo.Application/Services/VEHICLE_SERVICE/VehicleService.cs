@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using CarExpo.Application.Commands.Command.VehicleCommand;
 using CarExpo.Application.Interfaces;
-using CarExpo.Domain.Models.CarBrands;
+using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Vehicles;
 using CarExpo.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,65 +32,15 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
             if (carExsist)
                 throw new Exception("این خودرو قبلا ثبت شده هست");
 
-            Car car; // تعریف فقط، نه مقداردهی
+            var brand = await _unitOfWork.VehicleRepository.GetByBrand(addCarCommand.BrandId);
 
-            var normalizedBrand = addCarCommand.Brand.ToLower();
+            //if (brand == null)
+            //    brand = new Brand { Title = addCarCommand.BrandId };
+            //await _unitOfWork.VehicleRepository.AddBrandAsync(brand);
 
-            switch (normalizedBrand)
-            {
-                case "bahmanmotor":
-                    car = _mapper.Map<BahmanMotor>(addCarCommand);
-                    break;
+            var car = _mapper.Map<Car>(addCarCommand);
 
-                case "brilliance":
-                    car = _mapper.Map<Brilliance>(addCarCommand);
-                    break;
-
-                case "chery":
-                    car = _mapper.Map<Chery>(addCarCommand); // اینجا قبلاً اشتباهی JAC بود!
-                    break;
-
-                case "hyundai":
-                    car = _mapper.Map<Hyundai>(addCarCommand);
-                    break;
-
-                case "jac":
-                    car = _mapper.Map<JAC>(addCarCommand);
-                    break;
-
-                case "kia":
-                    car = _mapper.Map<Kia>(addCarCommand);
-                    break;
-
-                case "lifan":
-                    car = _mapper.Map<Lifan>(addCarCommand);
-                    break;
-
-                case "modirankhodro":
-                    car = _mapper.Map<ModiranKhodro>(addCarCommand);
-                    break;
-
-                case "parskhodro":
-                    car = _mapper.Map<ParsKhodro>(addCarCommand);
-                    break;
-
-                case "peugeot":
-                    car = _mapper.Map<Peugeot>(addCarCommand);
-                    break;
-
-                case "renault":
-                    car = _mapper.Map<Renault>(addCarCommand);
-                    break;
-
-                case "saipa":
-                    car = _mapper.Map<Saipa>(addCarCommand);
-                    break;
-
-                default:
-                    car = _mapper.Map<Car>(addCarCommand);
-                    car.Brand = addCarCommand.Brand;
-                    break;
-            }
+            car.BrandId = brand.Id;
 
             if (car.UserId != addCarCommand.UserId)
                 throw new Exception("آیدی مشکل دارد");
@@ -99,12 +50,20 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
             return car;
         }
 
-
-
-
-        public async Task<List<Car>> FilterCars(CarSearchCommand carSearchCommand)
+        public async Task<Brand> BrandAsync(Brand brand)
         {
-            var result = await _unitOfWork.VehicleRepository.FilterCarsAsync(carSearchCommand.Brand,
+            var result = await _unitOfWork.VehicleRepository.GetByBrand(brand.Id);
+
+            if (result == null)
+                throw new Exception("نتیجه خالی هست");
+
+            return result;
+        }
+
+        public async Task<List<Car>> FilterCars(FilterCarCommand carSearchCommand)
+        {
+            var result = await _unitOfWork.VehicleRepository.FilterCarsAsync(
+            carSearchCommand.Brand,
             carSearchCommand.Model,
             carSearchCommand.Color,
             carSearchCommand.ManufactureYear,
@@ -128,8 +87,8 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
             if (car.Color != null && car.Color != editCarInfoCommand.Color)
                 car.Color = editCarInfoCommand.Color;
 
-            if (car.Brand != null && car.Brand != editCarInfoCommand.Brand)
-                car.Brand = editCarInfoCommand.Brand;
+            //if (car.Brand != null && car.Brand.Title != editCarInfoCommand.Brand)
+            //    car.Brand = editCarInfoCommand.Brand.Title;
 
             if (car.Model != null && car.Model != editCarInfoCommand.Model)
                 car.Model = editCarInfoCommand.Model;
