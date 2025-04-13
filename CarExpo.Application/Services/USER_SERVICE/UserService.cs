@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CarExpo.Application.Commands.Command.UserCommand;
 using CarExpo.Application.Dto;
-using CarExpo.Application.Interfaces;
+using CarExpo.Application.Interfaces.User_Interface;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Infrastructure;
 using Microsoft.AspNetCore.Identity;

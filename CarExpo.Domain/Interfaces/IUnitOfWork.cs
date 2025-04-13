@@ -1,4 +1,7 @@
-﻿using CarExpo.Domain.Interfaces;
+﻿using CarExpo.Domain.Interfaces.CarRepositories;
+using CarExpo.Domain.Interfaces.OrderRpository;
+using CarExpo.Domain.Interfaces.PaymentInterface;
+using CarExpo.Domain.Interfaces.UserRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +17,8 @@ public interface IUnitOfWork : IDisposable
     IVehicleRepository VehicleRepository { get; }
     ICarImageRepository CarImageRepository { get; }
     IOrderRepository OrderRepository { get; }
+    IOrderItemRepository OrderItemRepository { get; }
+    IPaymentRepository PaymentRepository { get; }
     Task<int> SaveChangesAsync();
 }
 

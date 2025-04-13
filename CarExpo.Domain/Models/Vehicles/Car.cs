@@ -43,7 +43,7 @@ namespace CarExpo.Domain.Models.Vehicles
 
         public Guid BrandId { get; set; }
 
-        public string? TotalPrice { get; set; }
+        public decimal? TotalPrice { get; set; }
 
         public Brand Brand { get; set; }
 

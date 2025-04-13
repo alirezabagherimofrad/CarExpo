@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CarExpo.Application.Commands.Command;
+using CarExpo.Application.Commands.Command.OrserCommand;
 using CarExpo.Domain.Models.Orders;
 using CarExpo.Domain.Models.Vehicles;
 using System;
@@ -19,6 +19,10 @@ namespace CarExpo.Application.Mappings
             CreateMap<Car, OrderCommand>().ReverseMap();
 
             CreateMap<Order, OrderCommand>().ReverseMap();
+
+            CreateMap<Order, OrderCommand>().ReverseMap();
+
+            CreateMap<OrderCommand, OrderItem>().ReverseMap();
         }
     }
 }

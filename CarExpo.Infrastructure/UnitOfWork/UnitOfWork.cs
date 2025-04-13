@@ -1,10 +1,17 @@
-﻿
-using CarExpo.Domain.Interfaces;
+﻿using CarExpo.Domain.Interfaces.CarRepositories;
+using CarExpo.Domain.Interfaces.OrderRpository;
+using CarExpo.Domain.Interfaces.PaymentInterface;
+using CarExpo.Domain.Interfaces.UserRepository;
 using CarExpo.Domain.Models.Orders;
+using CarExpo.Domain.Models.Payment;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
 using CarExpo.Infrastructure;
 using CarExpo.Infrastructure.Context;
+using CarExpo.Infrastructure.Repositories.Car_Repository;
+using CarExpo.Infrastructure.Repositories.Order_Repository;
+using CarExpo.Infrastructure.Repositories.Payment_Repository;
+using CarExpo.Infrastructure.Repositories.User_Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +28,8 @@ public class UnitOfWork : IUnitOfWork
     private IVehicleRepository? _vehicleRepository;
     private ICarImageRepository? _carImageRepository;
     private IOrderRepository? _orderRepository;
+    public IOrderItemRepository? _orderItemRepository;
+    public IPaymentRepository? _paymentRepository;
     public UnitOfWork(DataBaseContext context)
     {
         _context = context;
@@ -70,6 +79,25 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
+    public IOrderItemRepository OrderItemRepository
+    {
+        get
+        {
+            if (_orderItemRepository == null)
+                _orderItemRepository = new OrderItemRepository(_context);
+            return _orderItemRepository;
+        }
+    }
+
+    public IPaymentRepository PaymentRepository
+    {
+        get
+        {
+            if (_paymentRepository == null)
+                _paymentRepository = new PaymentRepository(_context);
+            return _paymentRepository;
+        }
+    }
     public void Dispose()
     {
         _context.Dispose();
@@ -99,6 +127,18 @@ public class UnitOfWork : IUnitOfWork
         {
             _orderRepository ??= new OrderRepository(_context);
             return (IGenericRepository<T>)_orderRepository;
+        }
+
+        if (typeof(T) == typeof(OrderItem))
+        {
+            _orderItemRepository ??= new OrderItemRepository(_context);
+            return (IGenericRepository<T>)_orderItemRepository;
+        }
+
+        if (typeof(T) == typeof(Payment))
+        {
+            _paymentRepository ??= new PaymentRepository(_context);
+            return (IGenericRepository<T>)_paymentRepository;
         }
 
         if (!_repositories.ContainsKey(typeof(T)))

@@ -1,11 +1,9 @@
 using FluentValidation;
-using CarExpo.Application.Interfaces;
 using CarExpo.Application.Mappings;
 using CarExpo.Infrastructure;
 using CarExpo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using CarExpo.Infrastructure.Repositories;
-using CarExpo.Domain.Interfaces;
 using CarExpo.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +14,20 @@ using CarExpo.Application.Commands.CommandValidator.VehicleCommandValidator;
 using CarExpo.FilterException;
 using Microsoft.AspNetCore.Mvc.Filters;
 using CarExpo.Application.Services.Order_Service;
+using CarExpo.Domain.Interfaces.CarRepositories;
+using CarExpo.Domain.Interfaces.UserRepository;
+using CarExpo.Domain.Interfaces.OrderRpository;
+using CarExpo.Infrastructure.Repositories.Car_Repository;
+using CarExpo.Infrastructure.Repositories.Order_Repository;
+using CarExpo.Infrastructure.Repositories.User_Repository;
+using CarExpo.Application.Interfaces.Car_Interface;
+using CarExpo.Application.Interfaces.User_Interface;
+using CarExpo.Application.Interfaces.Order_Interface;
+using CarExpo.Application.Interfaces.Email_Interface;
+using CarExpo.Application.Services.Email_Service;
+using CarExpo.Application.Interfaces.Payment_Interface;
+using CarExpo.Application.Services.PAYMENT_SERVICE;
+using CarExpo.Application.Commands.CommandValidator.PaymentCommandValidator;
 
 
 namespace CarExpo
@@ -29,14 +41,15 @@ namespace CarExpo
             builder.Services.AddDbContext<DataBaseContext>(option =>
               option.UseSqlServer(builder.Configuration.GetConnectionString("CarExpo")));
 
-
             builder.Services.AddValidatorsFromAssemblyContaining<RegisterCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<AddCarCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<EditCarInfoCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<PaymentRequestCommandValidator>();
 
             builder.Services.AddAutoMapper(typeof(UserMapper));
             builder.Services.AddAutoMapper(typeof(VehicleMapper));
             builder.Services.AddAutoMapper(typeof(OrderMapper));
+            builder.Services.AddAutoMapper(typeof(PaymentMapper));
 
             builder.Services.AddIdentityCore<User>(options =>
             {
@@ -54,7 +67,6 @@ namespace CarExpo
             builder.Services.AddDataProtection();
             builder.Services.AddHttpContextAccessor();
 
-
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -71,18 +83,26 @@ namespace CarExpo
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
+            builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+
+            builder.Services.AddScoped<IEmailNotificationService, EmailNotificationService>();
+
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddControllers(Options =>
+            builder.Services.AddControllers(options =>
             {
-                Options.Filters.Add<CustomExceptionFilter>();
+                options.Filters.Add<CustomExceptionFilter>();
+            })
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.WriteIndented = true;
             });
 
-
             var app = builder.Build();
-
-
 
             if (app.Environment.IsDevelopment())
             {
@@ -93,7 +113,6 @@ namespace CarExpo
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

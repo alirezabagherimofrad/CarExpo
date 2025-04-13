@@ -34,9 +34,7 @@ namespace CarExpo.Application.Commands.Command.VehicleCommand
 
         public salestatus? salestatus { get; set; }
 
-        public string? TotalPrice { get; set; }
-
-
+        public decimal? TotalPrice { get; set; }
 
         public void Validate()
         {

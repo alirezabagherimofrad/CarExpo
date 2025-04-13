@@ -10,13 +10,13 @@ namespace CarExpo.Domain.Models.Orders
     {
         public Guid Id { get; set; }
 
-        public Guid OrederId { get; set; }
+        public Guid OrderId { get; set; }
 
         public Guid CarId { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? TotalPrice { get; set; }
 
-        public Order ? Order { get; set; } 
+        public Order? Order { get; set; }
 
 
     }

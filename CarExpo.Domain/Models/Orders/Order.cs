@@ -21,7 +21,7 @@ namespace CarExpo.Domain.Models.Orders
 
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
-        public decimal TotalPrice { get; set; }
+        public decimal? TotalPrice { get; set; }
 
         public DateTime OrderTime { get; set; }
 

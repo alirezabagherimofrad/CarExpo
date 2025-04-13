@@ -39,67 +39,67 @@ namespace CarExpo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1956f132-4c63-47e1-8c71-b359c1db7369"),
+                            Id = new Guid("f802bd56-39bb-4e8c-b7ea-df7c4f5b9fec"),
                             Title = "Saipa"
                         },
                         new
                         {
-                            Id = new Guid("7f55acec-da5a-4fc2-aa00-5ead95be5ac9"),
+                            Id = new Guid("f490ba25-8ff8-48da-a23d-3315dd24d6de"),
                             Title = "Kia"
                         },
                         new
                         {
-                            Id = new Guid("510adcb7-cdc6-4a00-b754-40dd00c96db6"),
+                            Id = new Guid("137bf5f3-27ed-42a6-928c-9d5f9b0e4bd5"),
                             Title = "Peugeot"
                         },
                         new
                         {
-                            Id = new Guid("b1875e70-9405-4ffc-ab05-76f026d15fe7"),
+                            Id = new Guid("0d691527-42d1-4c3f-bf4b-05fc19ffc798"),
                             Title = "Hyundai"
                         },
                         new
                         {
-                            Id = new Guid("7fc68c83-8dfa-40f9-8c3b-c90b240e0bb7"),
+                            Id = new Guid("73117532-bd80-47e1-b6ff-96f051bc9e68"),
                             Title = "Chery"
                         },
                         new
                         {
-                            Id = new Guid("27e73a5e-1b0e-4df2-a48c-47921584f49f"),
+                            Id = new Guid("4169d5de-3848-4019-8d70-132dcb7df4c9"),
                             Title = "Brilliance"
                         },
                         new
                         {
-                            Id = new Guid("e4c63fa9-30a5-4cda-9cb4-711f64d1c176"),
+                            Id = new Guid("6331ba38-73d0-4e09-ac30-fc8f09976a0b"),
                             Title = "Renault"
                         },
                         new
                         {
-                            Id = new Guid("52d18654-4e99-4577-896a-5bc105153979"),
+                            Id = new Guid("6e2f455b-39e3-4270-bfd8-4e2e4978587c"),
                             Title = "Lifan"
                         },
                         new
                         {
-                            Id = new Guid("86f4cf4e-aa51-4d7f-9731-f06ad7a5a4e7"),
+                            Id = new Guid("7d7554b0-6e02-46d9-bfc7-7f9b7f23e7ee"),
                             Title = "JAC"
                         },
                         new
                         {
-                            Id = new Guid("d0632efd-5839-49b8-a740-2014bd35030c"),
+                            Id = new Guid("ca856877-f44f-45b9-9803-c9c64d8f1605"),
                             Title = "BahmanMotor"
                         },
                         new
                         {
-                            Id = new Guid("3d8fbba8-ea94-4f22-8151-bc4773edbef9"),
+                            Id = new Guid("e530f976-55df-43ce-97d2-e2bc9c0d5c5c"),
                             Title = "ParsKhodro"
                         },
                         new
                         {
-                            Id = new Guid("baa04ca7-e4aa-4d0a-8e9e-54e170830dfa"),
+                            Id = new Guid("3b0f8480-d3a8-4f9e-82f2-6a53f12527ea"),
                             Title = "ModiranKhodro"
                         },
                         new
                         {
-                            Id = new Guid("6f3fbfbb-cb9d-4c3d-920a-cac91b4a54ca"),
+                            Id = new Guid("f5fd1e90-d515-4688-9bf8-147afa08da45"),
                             Title = "KermanMotor"
                         });
                 });
@@ -119,7 +119,7 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -136,20 +136,54 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<Guid>("CarId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OrederId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("CarExpo.Domain.Models.Payment.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CarId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CardNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("TimeOfpayment")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TrackingCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("CarExpo.Domain.Models.Users.User", b =>
@@ -278,8 +312,8 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<int?>("Salestatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("TotalPrice")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -456,7 +490,9 @@ namespace CarExpo.Infrastructure.Migrations
                 {
                     b.HasOne("CarExpo.Domain.Models.Orders.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
                 });

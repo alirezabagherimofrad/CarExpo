@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Orders;
+using System.Security.Cryptography.Pkcs;
+using CarExpo.Domain.Models.Payment;
 
 namespace CarExpo.Infrastructure.Context
 {
@@ -26,7 +28,8 @@ namespace CarExpo.Infrastructure.Context
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarImage> CarImages { get; set; }
         public DbSet<Order> Orders { get; set; }
-
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Payment> payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,8 +72,8 @@ namespace CarExpo.Infrastructure.Context
             modelBuilder.Entity<Car>()
            .HasOne(c => c.User)
            .WithMany(c => c.Cars)
-           .HasForeignKey(c => c.UserId)
-           .OnDelete(DeleteBehavior.Cascade);
+           .HasForeignKey(c => c.UserId);
+            //.OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CarImage>()
            .HasOne(c => c.Car)
