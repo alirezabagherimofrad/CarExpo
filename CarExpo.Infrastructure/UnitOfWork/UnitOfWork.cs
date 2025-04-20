@@ -1,12 +1,13 @@
 ﻿using CarExpo.Domain.Interfaces.CarRepositories;
+using CarExpo.Domain.Interfaces.IGenericInterface;
 using CarExpo.Domain.Interfaces.OrderRpository;
 using CarExpo.Domain.Interfaces.PaymentInterface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Interfaces.UserRepository;
 using CarExpo.Domain.Models.Orders;
 using CarExpo.Domain.Models.Payment;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
-using CarExpo.Infrastructure;
 using CarExpo.Infrastructure.Context;
 using CarExpo.Infrastructure.Repositories.Car_Repository;
 using CarExpo.Infrastructure.Repositories.Order_Repository;

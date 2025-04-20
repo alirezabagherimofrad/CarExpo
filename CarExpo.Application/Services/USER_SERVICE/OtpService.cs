@@ -1,7 +1,7 @@
 ﻿using CarExpo.Application.Commands.Command.UserCommand;
 using CarExpo.Application.Interfaces.User_Interface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Models.Users;
-using CarExpo.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;

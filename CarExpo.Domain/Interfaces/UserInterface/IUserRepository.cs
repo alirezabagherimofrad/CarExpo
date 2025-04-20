@@ -1,5 +1,5 @@
-﻿using CarExpo.Domain.Models.Users;
-using CarExpo.Infrastructure;
+﻿using CarExpo.Domain.Interfaces.IGenericInterface;
+using CarExpo.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,8 @@ namespace CarExpo.Domain.Interfaces.UserRepository
         Task<User?> RecoverPasswordAsync(string phoneNumber);
 
         Task<User?> RegisterAsync(User user);
+
+        Task<User?> SoftDeleteAsync(Guid Id);
 
     }
 }

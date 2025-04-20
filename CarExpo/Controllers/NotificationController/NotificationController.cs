@@ -1,6 +1,6 @@
 ﻿using CarExpo.Application.Interfaces.Email_Interface;
 using CarExpo.Application.Interfaces.User_Interface;
-using CarExpo.Infrastructure;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,8 +27,8 @@ namespace CarExpo.Controllers.NotificationController
             if (user == null)
                 return NotFound("کاربری با این آیدی پیدا نشد");
 
-            var subject = "سلام از CarExpo 👋";
-            var body = $"سلام {user.UserName}، خرید ماشینت در حال بررسیه سلطان! 😎";
+            var subject = "سلام از CarExpo ";
+            var body = $"سلام {user.UserName}، خرید ماشینت در حال بررسیه سلطان!";
 
             await _emailNotificationService.SendEmail(user.Email, subject, body);
 

@@ -1,28 +1,32 @@
 ﻿using AutoMapper;
 using CarExpo.Application.Commands.Command.PaymentRequestCommand;
 using CarExpo.Application.Interfaces.Email_Interface;
+using CarExpo.Application.Interfaces.Loyalty_Interface;
 using CarExpo.Application.Interfaces.Payment_Interface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Models.Payment;
 using CarExpo.Domain.Models.Vehicles;
-using CarExpo.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CarExpo.Domain.Models.Users.User;
 
 namespace CarExpo.Application.Services.PAYMENT_SERVICE
 {
     public class PaymentService : IPaymentService
     {
         private readonly IEmailNotificationService _emailNotificationService;
+        private readonly ILoyaltyService _loyaltyService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public PaymentService(IEmailNotificationService emailNotificationService, IUnitOfWork unitOfWork, IMapper mapper)
+        public PaymentService(IEmailNotificationService emailNotificationService, IUnitOfWork unitOfWork, IMapper mapper, ILoyaltyService loyaltyService)
         {
             _emailNotificationService = emailNotificationService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _loyaltyService = loyaltyService;
         }
         public async Task<Payment> Payment(PaymentRequestCommand paymentRequestCommand)
         {
@@ -34,23 +38,16 @@ namespace CarExpo.Application.Services.PAYMENT_SERVICE
 
             var order = await _unitOfWork.OrderRepository.GetByIdAsync(paymentRequestCommand.OrderId);
 
+            var loayalty = await _loyaltyService.ApplyLoyalty(paymentRequestCommand);
+
             if (user == null)
                 throw new Exception("همچین آیدی برای یوزر وجود ندارد");
-
-            if (user.Id != paymentRequestCommand.UserId)
-                throw new Exception("آیدی یوزر اشتباه وارد شده است");
 
             if (order == null)
                 throw new Exception("همچین آیدی سفارشی وجود ندارد");
 
-            if (order.Id != paymentRequestCommand.OrderId)
-                throw new Exception("آیدی سفارش اشتباه هست");
-
             if (car == null)
                 throw new Exception("همچین ماشینی با این آیدی وجود ندارد");
-
-            if (user.Id != paymentRequestCommand.UserId)
-                throw new Exception("آیدی کاربر درست وارد نشده");
 
             if (car.Id != paymentRequestCommand.CarId)
                 throw new Exception("آیدی ماشین اشتباه هست آیدی درست را وارد نمایید");
@@ -89,7 +86,7 @@ namespace CarExpo.Application.Services.PAYMENT_SERVICE
             {
                 var subjectSeller = "ماشین شما با موفقیت به فروش رسید - CarExpo";
 
-                var bodySeller = $"سلام {seller.UserName ?? "کاربر گرامی"},\n\n" + "تا چند ساعت آینده پول مبلغ مورد نظر به حساب شما واریز خواهد شد";
+                var bodySeller = $"سلام {seller.UserName ?? "کاربر گرامی"},\n\n" + "تا چند ساعت آینده مبلغ مورد نظر به حساب شما واریز خواهد شد";
 
                 await _emailNotificationService.SendEmail(seller.Email, subjectSeller, bodySeller);
             }
@@ -98,9 +95,9 @@ namespace CarExpo.Application.Services.PAYMENT_SERVICE
 
             await _unitOfWork.OrderRepository.UpdateAsync(order);
 
-            await _unitOfWork.PaymentRepository.AddAsync(payment);
+            await _unitOfWork.UserRepository.UpdateAsync(loayalty);
 
-            await _unitOfWork.PaymentRepository.UpdateAsync(payment);
+            await _unitOfWork.PaymentRepository.AddAsync(payment);
 
             await _unitOfWork.SaveChangesAsync();
 

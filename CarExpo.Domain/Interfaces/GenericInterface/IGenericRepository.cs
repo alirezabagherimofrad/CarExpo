@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  CarExpo.Infrastructure;
+namespace CarExpo.Domain.Interfaces.IGenericInterface;
 
 public interface IGenericRepository<T> where T : class
 {

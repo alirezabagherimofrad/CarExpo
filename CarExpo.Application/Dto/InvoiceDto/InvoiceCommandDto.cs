@@ -4,18 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Domain.Models.Notifications
+namespace CarExpo.Application.Dto.InvoiceDto
 {
-    public class Notification
+    public class InvoiceCommandDto
     {
         public Guid Id { get; set; }
 
         public Guid UserId { get; set; }
-
-        public string? Subject { get; set; }
-
-        public string? Message { get; set; }
-
-        public DateTime SentAt { get; set; }
     }
 }

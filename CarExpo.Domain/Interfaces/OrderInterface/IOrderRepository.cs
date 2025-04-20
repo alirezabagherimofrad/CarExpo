@@ -1,5 +1,5 @@
-﻿using CarExpo.Domain.Models.Orders;
-using CarExpo.Infrastructure;
+﻿using CarExpo.Domain.Interfaces.IGenericInterface;
+using CarExpo.Domain.Models.Orders;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

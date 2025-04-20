@@ -2,9 +2,9 @@
 using CarExpo.Application.Commands.Command.OrserCommand;
 using CarExpo.Application.Interfaces.Email_Interface;
 using CarExpo.Application.Interfaces.Order_Interface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Models.Orders;
 using CarExpo.Domain.Models.Vehicles;
-using CarExpo.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,16 +64,6 @@ namespace CarExpo.Application.Services.Order_Service
 
             order.TotalPrice = car.TotalPrice;
 
-            //var orderitem = _mapper.Map<OrderItem>(orderCommand);
-
-            //orderitem.Id = Guid.NewGuid();
-
-            //orderitem.CarId = car.Id;
-
-            //orderitem.OrderId = order.Id;
-
-            //orderitem.TotalPrice = car.TotalPrice;
-
             var orderitem = new OrderItem();
             orderitem.Id = Guid.NewGuid();
             orderitem.OrderId = order.Id;
@@ -88,7 +78,7 @@ namespace CarExpo.Application.Services.Order_Service
                 var body = $"سلام {user.UserName ?? "کاربر عزیز"},\n\n" +
                           $"درخواست شما برای خرید خودرو با برند «{car.Brand}» با موفقیت انجام شد.\n" +
                           $"لطفاً برای نهایی شدن خرید، نسبت به پرداخت مبلغ خودرو اقدام فرمایید.\n\n" +
-                          $"با تشکر از شما 🌟";
+                          $"با تشکر از شما ";
 
                 await _emailNotificationService.SendEmail(user.Email, subject, body);
             }
@@ -96,8 +86,6 @@ namespace CarExpo.Application.Services.Order_Service
             await _unitOfWork.VehicleRepository.UpdateAsync(car);
 
             await _unitOfWork.OrderRepository.AddAsync(order);
-
-            //await _unitOfWork.OrderItemRepository.AddItemAsync(orderitem);
 
             await _unitOfWork.SaveChangesAsync();
 

@@ -64,4 +64,6 @@ namespace CarExpo.Domain.Models.Vehicles
         Unavailable,
         pendingreview
     }
+
+
 }

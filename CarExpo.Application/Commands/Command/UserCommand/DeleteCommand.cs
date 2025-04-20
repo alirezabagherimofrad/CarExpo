@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Domain.Models.Reports
+namespace CarExpo.Application.Commands.Command.UserCommand
 {
-    public class Report
+    public class DeleteCommand
     {
-
+        public Guid Id { get; set; }
     }
 }

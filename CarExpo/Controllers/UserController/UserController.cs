@@ -19,8 +19,6 @@ namespace CarExpo.Controllers.UserController
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterCommand registerCommand)
         {
-            registerCommand.Validate();
-
             var result = await _userService.RegisterAsync(registerCommand);
 
             return Ok(result);
@@ -65,6 +63,17 @@ namespace CarExpo.Controllers.UserController
 
             return Ok("بازیابی رمز عبور شما با موفقیت انجام شد");
         }
-
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteAsync(DeleteCommand deleteCommand)
+        {
+            var user = await _userService.DeleteUser(deleteCommand);
+            return Ok("کاربر با موفقیت حذف شد");
+        }
+        [HttpDelete("SoftDelete")]
+        public async Task<IActionResult> SoftDeleteAsync(SoftDeleteCommand softDeleteCommand)
+        {
+            var user = await _userService.SoftDelete(softDeleteCommand);
+            return Ok("حذف منطقی کاربر با موفقیت انجام شد");
+        }
     }
 }

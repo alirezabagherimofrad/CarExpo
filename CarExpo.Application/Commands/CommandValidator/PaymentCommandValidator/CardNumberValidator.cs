@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarExpo.Application.Commands.CommandValidator.PaymentCommandValidator
 {
-    public static class CarValidator
+    public static class CardNumberValidator
     {
         public static bool IsValidCardNumber(string? cardNumber)
         {

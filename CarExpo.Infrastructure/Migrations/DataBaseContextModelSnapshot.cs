@@ -39,67 +39,67 @@ namespace CarExpo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f802bd56-39bb-4e8c-b7ea-df7c4f5b9fec"),
+                            Id = new Guid("41c6da2b-077a-4da1-b6e4-fbe6c24f5a46"),
                             Title = "Saipa"
                         },
                         new
                         {
-                            Id = new Guid("f490ba25-8ff8-48da-a23d-3315dd24d6de"),
+                            Id = new Guid("4c2f34aa-853b-4281-a282-ebf5a9811c34"),
                             Title = "Kia"
                         },
                         new
                         {
-                            Id = new Guid("137bf5f3-27ed-42a6-928c-9d5f9b0e4bd5"),
+                            Id = new Guid("44da3b36-8684-4f03-a713-7354411862a4"),
                             Title = "Peugeot"
                         },
                         new
                         {
-                            Id = new Guid("0d691527-42d1-4c3f-bf4b-05fc19ffc798"),
+                            Id = new Guid("e7439f07-65f0-4305-bb61-d2d4c145b51d"),
                             Title = "Hyundai"
                         },
                         new
                         {
-                            Id = new Guid("73117532-bd80-47e1-b6ff-96f051bc9e68"),
+                            Id = new Guid("d2b7e23e-b078-4f95-931d-eaf84d9d72dd"),
                             Title = "Chery"
                         },
                         new
                         {
-                            Id = new Guid("4169d5de-3848-4019-8d70-132dcb7df4c9"),
+                            Id = new Guid("46032581-acaf-45a4-b22c-ef6ebe51bcec"),
                             Title = "Brilliance"
                         },
                         new
                         {
-                            Id = new Guid("6331ba38-73d0-4e09-ac30-fc8f09976a0b"),
+                            Id = new Guid("011a1588-92ee-44a7-998e-957f2528cf40"),
                             Title = "Renault"
                         },
                         new
                         {
-                            Id = new Guid("6e2f455b-39e3-4270-bfd8-4e2e4978587c"),
+                            Id = new Guid("fe131880-31e0-4de2-a39d-7cf97edb8aa5"),
                             Title = "Lifan"
                         },
                         new
                         {
-                            Id = new Guid("7d7554b0-6e02-46d9-bfc7-7f9b7f23e7ee"),
+                            Id = new Guid("d7795a56-d254-4e01-a735-764b5f28cfa3"),
                             Title = "JAC"
                         },
                         new
                         {
-                            Id = new Guid("ca856877-f44f-45b9-9803-c9c64d8f1605"),
+                            Id = new Guid("cc8989e4-67d0-4e06-83b7-06707bd187fa"),
                             Title = "BahmanMotor"
                         },
                         new
                         {
-                            Id = new Guid("e530f976-55df-43ce-97d2-e2bc9c0d5c5c"),
+                            Id = new Guid("3bdfbda7-f1c2-4bf2-b5bf-b8e152ef0657"),
                             Title = "ParsKhodro"
                         },
                         new
                         {
-                            Id = new Guid("3b0f8480-d3a8-4f9e-82f2-6a53f12527ea"),
+                            Id = new Guid("0b4f967f-f82a-43b6-8e5c-d636779b2890"),
                             Title = "ModiranKhodro"
                         },
                         new
                         {
-                            Id = new Guid("f5fd1e90-d515-4688-9bf8-147afa08da45"),
+                            Id = new Guid("67c16414-d167-4d92-9659-1aa3cbc44f07"),
                             Title = "KermanMotor"
                         });
                 });
@@ -215,11 +215,20 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<decimal>("LoyaltyPoints")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("LoyaltyStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("NationalCode")
                         .HasColumnType("nvarchar(max)");

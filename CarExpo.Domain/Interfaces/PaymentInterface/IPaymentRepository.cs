@@ -1,5 +1,5 @@
-﻿using CarExpo.Domain.Models.Payment;
-using CarExpo.Infrastructure;
+﻿using CarExpo.Domain.Interfaces.IGenericInterface;
+using CarExpo.Domain.Models.Payment;
 using System;
 using System.Collections.Generic;
 using System.Linq;

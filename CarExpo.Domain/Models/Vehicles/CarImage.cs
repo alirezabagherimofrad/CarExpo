@@ -8,7 +8,7 @@ namespace CarExpo.Domain.Models.Vehicles
 {
     public class CarImage
     {
-        public CarImage(string name, string path,Guid carId)
+        public CarImage(string name, string path, Guid carId)
         {
             Id = Guid.NewGuid();
             Name = name;

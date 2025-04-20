@@ -11,11 +11,13 @@ namespace CarExpo.Application.Commands.CommandValidator.UserCommandValidator
 {
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
+        public string NationalCode { get; set; }
         public string Email { get; set; }
 
         public string Password { get; set; }
 
         public string PhoneNumber { get; set; }
+
 
         public RegisterCommandValidator()
         {
@@ -41,6 +43,36 @@ namespace CarExpo.Application.Commands.CommandValidator.UserCommandValidator
            .Matches(new Regex(@"^(?:(?:\+98)|(?:0))9\d{9}$"))
            .WithMessage("شماره تلفن وارد شده صحیح نیست لطفا شماره درست وارد کنید");
 
+            RuleFor(x => x.NationalCode)
+           .NotEmpty().WithMessage("کد ملی را وارد کنید")
+           .Matches(@"^\d{10}$").WithMessage("کد ملی باید 10 رقم باشد.")
+           .Must(IsValidIranianNationalCode).WithMessage("کد ملی وارد شده نامعتبر است.");
+
+        }
+        private bool IsValidIranianNationalCode(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code) || !Regex.IsMatch(code, @"^\d{10}$"))
+                return false;
+
+            var invalidCodes = new[]
+            {
+                "0000000000", "1111111111", "2222222222", "3333333333",
+                "4444444444", "5555555555", "6666666666", "7777777777",
+                "8888888888", "9999999999"
+            };
+
+            if (invalidCodes.Contains(code))
+                return false;
+
+            int sum = 0;
+            for (int i = 0; i < 9; i++)
+                sum += (int)char.GetNumericValue(code[i]) * (10 - i);
+
+            int remainder = sum % 11;
+            int checkDigit = (int)char.GetNumericValue(code[9]);
+
+            return (remainder < 2 && checkDigit == remainder) ||
+                   (remainder >= 2 && checkDigit == 11 - remainder);
         }
     }
 }

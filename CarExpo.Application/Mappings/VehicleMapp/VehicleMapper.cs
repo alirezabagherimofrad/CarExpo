@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Mappings
+namespace CarExpo.Application.Mappings.VehicleMapp
 {
     public class VehicleMapper : Profile
     {

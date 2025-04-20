@@ -1,6 +1,4 @@
 using FluentValidation;
-using CarExpo.Application.Mappings;
-using CarExpo.Infrastructure;
 using CarExpo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using CarExpo.Infrastructure.Repositories;
@@ -28,6 +26,18 @@ using CarExpo.Application.Services.Email_Service;
 using CarExpo.Application.Interfaces.Payment_Interface;
 using CarExpo.Application.Services.PAYMENT_SERVICE;
 using CarExpo.Application.Commands.CommandValidator.PaymentCommandValidator;
+using CarExpo.Application.Interfaces.Loyalty_Interface;
+using CarExpo.Application.Services.Loyalty_Service;
+using CarExpo.Application.Interfaces.IIAnalytics_Service;
+using CarExpo.Application.Services.IAnalytics_Service;
+using CarExpo.Application.Interfaces.Invoice__Interface;
+using CarExpo.Application.Services.Invoice_Service;
+using CarExpo.Application.Mappings.UserMapp;
+using CarExpo.Application.Mappings.PaymentMap;
+using CarExpo.Application.Mappings.OrderMap;
+using CarExpo.Application.Mappings.VehicleMapp;
+using CarExpo.Domain.Interfaces.IGenericInterface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 
 
 namespace CarExpo
@@ -89,6 +99,12 @@ namespace CarExpo
 
             builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+            builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
+
+            builder.Services.AddScoped<IIAnalyticsService, IAnalyticsService>();
+
+            builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -109,6 +125,16 @@ namespace CarExpo
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            using var scope = app.Services.CreateScope();
+
+            var services = scope.ServiceProvider;
+
+            var dbcontext = services.GetRequiredService<DataBaseContext>();
+
+            dbcontext.Database.EnsureCreated();
+
+            dbcontext.Database.Migrate();
 
             app.UseHttpsRedirection();
 

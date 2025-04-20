@@ -1,7 +1,7 @@
-﻿using CarExpo.Domain.Models.Brands;
+﻿using CarExpo.Domain.Interfaces.IGenericInterface;
+using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
-using CarExpo.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;

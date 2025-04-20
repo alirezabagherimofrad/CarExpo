@@ -1,6 +1,6 @@
 ﻿
+using CarExpo.Domain.Interfaces.IGenericInterface;
 using CarExpo.Domain.Models.Users;
-using CarExpo.Infrastructure;
 using CarExpo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

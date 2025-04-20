@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using CarExpo.Application.Commands.Command.UserCommand;
-using CarExpo.Application.Dto;
+using CarExpo.Application.Dto.UserDto;
 using CarExpo.Application.Interfaces.User_Interface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Models.Users;
-using CarExpo.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -75,6 +75,15 @@ namespace CarExpo.Application.Services.USER_SERVICE
             if (user == null)
                 throw new Exception("کاربری به این شماره پیدا نشد");
 
+            if (user.Email == updateUserInfoCommand.Email)
+                throw new Exception("ایمیل کاربر نمی تواند تکراری باشد");
+
+            if (user.Password == updateUserInfoCommand.Password)
+                throw new Exception("رمز کاربر نمی تواند تکراری باشد");
+
+            if (user.PhoneNumber == updateUserInfoCommand.PhoneNumber)
+                throw new Exception("شماره همراه کاربر نمی تواند تکراری باشد");
+
             if (user.Otp != updateUserInfoCommand.Otp)
                 throw new Exception("رمز یکبار مصرف اشتباه هست");
 
@@ -91,7 +100,6 @@ namespace CarExpo.Application.Services.USER_SERVICE
 
             return user;
         }
-
         public async Task<User?> ResetPassword(ResetPasswordCommand resetPasswordCommand)
         {
             var user = await _unitOfWork.UserRepository.ResetPasswordAsync(resetPasswordCommand.PhoneNumber);
@@ -137,6 +145,34 @@ namespace CarExpo.Application.Services.USER_SERVICE
             user.Password = newpassword;
 
             await _unitOfWork.UserRepository.UpdateAsync(user);
+
+            return user;
+        }
+
+        public async Task<User?> DeleteUser(DeleteCommand deleteCommand)
+        {
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(deleteCommand.Id);
+
+            if (user == null) throw new Exception("همچین کاربری با این آیدی باری حذف کردن وجود ندارد");
+
+            await _unitOfWork.UserRepository.DeleteAsync(user);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<User?> SoftDelete(SoftDeleteCommand softDeleteCommand)
+        {
+            var user = await _unitOfWork.UserRepository.SoftDeleteAsync(softDeleteCommand.Id);
+
+            if (user == null) throw new Exception("کاربری با این ایمیل یافت نشد");
+
+            user.IsDeleted = true;
+
+            await _unitOfWork.UserRepository.UpdateAsync(user);
+
+            await _unitOfWork.SaveChangesAsync();
 
             return user;
         }

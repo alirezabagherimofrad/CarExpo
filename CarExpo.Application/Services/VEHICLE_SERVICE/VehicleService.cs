@@ -2,10 +2,10 @@
 using CarExpo.Application.Commands.Command.VehicleCommand;
 using CarExpo.Application.Interfaces.Car_Interface;
 using CarExpo.Application.Interfaces.Email_Interface;
+using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Users;
 using CarExpo.Domain.Models.Vehicles;
-using CarExpo.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -57,7 +57,7 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
             if (user == null)
                 throw new Exception("کاربری با این شناسه یافت نشد.");
 
-            var subjectForOwner = "سلام از CarExpo 👋";
+            var subjectForOwner = "سلام از CarExpo";
             var bodyForOwner = $"سلام {(user.UserName ?? "کاربر عزیز")}، ثبت اطلاعات خودروی شما با موفقیت انجام شد";
 
             if (!string.IsNullOrEmpty(user.Email))
@@ -69,7 +69,7 @@ namespace CarExpo.Application.Services.VEHICLE_SERVICE
 
             var subjectForOthers = "سلامی از CarExpo خوبی؟";
 
-            var bodyForOthers = "سلام سلطان حالت چطوره امروز یه ماشین جدید اومده بیا ببین یه وقت جریحه دار نشی ";
+            var bodyForOthers = "سلام سلطان حالت چطوره امروز یه ماشین جدید اومده بیا ببین یه وقت شاید جریحه دار شدیا ";
 
             foreach (var u in allUsers)
             {

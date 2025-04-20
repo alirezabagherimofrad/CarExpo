@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Dto
+namespace CarExpo.Application.Dto.CarDto
 {
     public class CarImageDto
     {

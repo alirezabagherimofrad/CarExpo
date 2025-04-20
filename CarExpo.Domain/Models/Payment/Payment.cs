@@ -26,16 +26,17 @@ namespace CarExpo.Domain.Models.Payment
         public string InvoiceNumber { get; set; }
         public string TrackingCode { get; set; }
 
-        private static readonly Random _random = new();
 
-        private static string RandomLetters(int length)
+        public static readonly Random _random = new();
+
+        public static string RandomLetters(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
 
-        private static string GenerateInvoiceNumber()
+        public static string GenerateInvoiceNumber()
         {
             var letters = RandomLetters(3);
             var randomLetter = RandomLetters(1);
@@ -43,7 +44,7 @@ namespace CarExpo.Domain.Models.Payment
             return $"{letters}-{randomLetter}-{numbers}";
         }
 
-        private static string GenerateTrackingCode()
+        public static string GenerateTrackingCode()
         {
             var letters = RandomLetters(3);
             var randomLetter = RandomLetters(1);

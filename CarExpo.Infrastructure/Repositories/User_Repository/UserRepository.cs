@@ -49,11 +49,16 @@ namespace CarExpo.Infrastructure.Repositories.User_Repository
 
         public async Task<User?> RegisterAsync(User user)
         {
-            _context.Users.AddAsync(user);
+            await _context.Users.AddAsync(user);
 
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<User?> SoftDeleteAsync(Guid Id)
+        {
+            return await _context.Users.FindAsync(Id);
         }
     }
 }

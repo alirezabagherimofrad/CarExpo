@@ -19,6 +19,8 @@ namespace CarExpo.Application.Commands.Command.UserCommand
 
         public string PhoneNumber { get; set; }
 
+        public string NationalCode { get; set; }
+
         public void Validate()
         {
             if (!new RegisterCommandValidator().Validate(this).IsValid)

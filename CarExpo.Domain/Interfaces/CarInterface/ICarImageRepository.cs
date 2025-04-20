@@ -1,5 +1,5 @@
-﻿using CarExpo.Domain.Models.Vehicles;
-using CarExpo.Infrastructure;
+﻿using CarExpo.Domain.Interfaces.IGenericInterface;
+using CarExpo.Domain.Models.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;

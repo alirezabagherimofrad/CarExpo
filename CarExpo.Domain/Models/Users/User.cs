@@ -37,6 +37,10 @@ namespace CarExpo.Domain.Models.Users
 
         public string? NationalCode { get; set; }
 
+        public decimal LoyaltyPoints { get; set; } = 0;
+        public Loyaltystatus? LoyaltyStatus { get; set; }
+        public bool IsDeleted { get; set; }
+
         public string? Otp { get; set; }
 
         public DateTime? OtpExpiration { get; set; }
@@ -48,5 +52,12 @@ namespace CarExpo.Domain.Models.Users
             return OtpCode.ToString();
         }
         public List<Car> Cars { get; set; }
+
+        public enum Loyaltystatus
+        {
+            Boronz,
+            Silver,
+            Gold
+        }
     }
 }

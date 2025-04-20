@@ -1,5 +1,5 @@
 ﻿using CarExpo.Application.Commands.Command.UserCommand;
-using CarExpo.Application.Dto;
+using CarExpo.Application.Dto.UserDto;
 using CarExpo.Domain.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -20,6 +20,10 @@ namespace CarExpo.Application.Interfaces.User_Interface
         Task<User?> ResetPassword(ResetPasswordCommand resetPasswordCommand);
 
         Task<User?> RecoverPassword(RecoverPasswordCommand recoverPasswordCommand);
+
+        Task<User?> DeleteUser(DeleteCommand deleteCommand);
+
+        Task<User?> SoftDelete(SoftDeleteCommand softDeleteCommand);
 
     }
 }

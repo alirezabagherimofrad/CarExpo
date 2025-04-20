@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Mappings
+namespace CarExpo.Application.Mappings.OrderMap
 {
     public class OrderMapper : Profile
     {

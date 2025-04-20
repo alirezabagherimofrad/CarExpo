@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Application.Dto
+namespace CarExpo.Application.Dto.UserDto
 {
-   public class RegisterDto
+    public class RegisterDto
     {
-        public string UserName { get; set; }    
+        public string UserName { get; set; }
 
         public string Password { get; set; }
 
         public string Email { get; set; }
 
+        public string NationalCode { get; set; }
     }
 }

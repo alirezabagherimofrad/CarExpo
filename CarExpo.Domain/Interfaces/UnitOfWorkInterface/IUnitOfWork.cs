@@ -1,4 +1,5 @@
 ﻿using CarExpo.Domain.Interfaces.CarRepositories;
+using CarExpo.Domain.Interfaces.IGenericInterface;
 using CarExpo.Domain.Interfaces.OrderRpository;
 using CarExpo.Domain.Interfaces.PaymentInterface;
 using CarExpo.Domain.Interfaces.UserRepository;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarExpo.Infrastructure;
+namespace CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 
 public interface IUnitOfWork : IDisposable
 {
