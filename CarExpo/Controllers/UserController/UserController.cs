@@ -24,6 +24,40 @@ namespace CarExpo.Controllers.UserController
             return Ok(result);
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var result = await _userService.LoginAsync(email, password);
+            if (!result.Success) return Unauthorized(result);
+            return Ok(result);
+        }
+
+        [HttpPost("LoginWithOtp")]
+        public async Task<IActionResult> LoginWithOtp(string phoneNumber, string password)
+        {
+            var result = await _userService.LoginWithOtpAsync(phoneNumber, password);
+
+            if (!result)
+                return Unauthorized("نام کاربری یا رمز اشتباه است");
+
+            return Ok("کد تایید ارسال شد");
+        }
+
+        [HttpPost("VerifyOtp")]
+        public async Task<IActionResult> VerifyOtp(string phoneNumber, string code)
+        {
+            var result = await _userService.VerifyOtpAsync(phoneNumber, code);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(new
+            {
+                Message = result.Message,
+                Token = result.Token
+            });
+        }
+
         [HttpPost("SendOtp")]
         public async Task<IActionResult> SendOtpAsync([FromBody] SendOtpCommand sendOtpCommand)
         {
@@ -32,13 +66,13 @@ namespace CarExpo.Controllers.UserController
             return Ok("کد یکبار مصرف با موفقیت ارسال شد");
         }
 
-        [HttpPost("VerifyOtp")]
-        public async Task<IActionResult> VerifyOtpCodeAsync([FromBody] VerifyOtpCommand verifyOtpCommand)
-        {
-            var userverify = await _otpService.VerifyOtp(verifyOtpCommand);
+        //[HttpPost("VerifyOtp")]
+        //public async Task<IActionResult> VerifyOtpCodeAsync([FromBody] VerifyOtpCommand verifyOtpCommand)
+        //{
+        //    var userverify = await _otpService.VerifyOtp(verifyOtpCommand);
 
-            return Ok("رمز یکبار مصرف درست وارد شد");
-        }
+        //    return Ok("رمز یکبار مصرف درست وارد شد");
+        //}
 
         [HttpPut("UpdateUserInfo")]
         public async Task<IActionResult> UpdateUserInfo([FromBody] UpdateUserInformatiobCommand updateUserInfoCommand)
@@ -63,12 +97,14 @@ namespace CarExpo.Controllers.UserController
 
             return Ok("بازیابی رمز عبور شما با موفقیت انجام شد");
         }
+
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteAsync(DeleteCommand deleteCommand)
         {
             var user = await _userService.DeleteUser(deleteCommand);
             return Ok("کاربر با موفقیت حذف شد");
         }
+
         [HttpDelete("SoftDelete")]
         public async Task<IActionResult> SoftDeleteAsync(SoftDeleteCommand softDeleteCommand)
         {

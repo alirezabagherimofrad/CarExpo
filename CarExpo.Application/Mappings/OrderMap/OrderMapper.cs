@@ -18,9 +18,7 @@ namespace CarExpo.Application.Mappings.OrderMap
 
             CreateMap<Car, OrderCommand>().ReverseMap();
 
-            CreateMap<Order, OrderCommand>().ReverseMap();
-
-            CreateMap<Order, OrderCommand>().ReverseMap();
+            CreateMap<OrderCommand, Order>().ConstructUsing(src => new Order(src.CarId)).ReverseMap();
 
             CreateMap<OrderCommand, OrderItem>().ReverseMap();
         }

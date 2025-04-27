@@ -8,16 +8,31 @@ namespace CarExpo.Domain.Models.Orders
 {
     public class OrderItem
     {
-        public Guid Id { get; set; }
+        public OrderItem()
+        {
+            Id = Guid.NewGuid();
+        }
+        public Guid Id { get; private set; }
 
-        public Guid OrderId { get; set; }
+        public Guid OrderId { get; private set; }
 
-        public Guid CarId { get; set; }
+        public Guid CarId { get; private set; }
 
-        public decimal? TotalPrice { get; set; }
+        public int? TotalPrice { get; private set; }
 
-        public Order? Order { get; set; }
+        public Order? Order { get; private set; }
 
-
+        public void orderid(Guid id)
+        {
+            OrderId = id;
+        }
+        public void carid(Guid id)
+        {
+            CarId = id;
+        }
+        public void price(int? totalprice)
+        {
+            TotalPrice = totalprice;
+        }
     }
 }

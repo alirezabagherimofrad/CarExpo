@@ -23,15 +23,15 @@ namespace CarExpo.Controllers.CarController
 
             return Ok(result);
         }
+
         [HttpPut("EditCarInfo")]
         public async Task<IActionResult> EditCarInfo(EditCarInfoCommand editCarInfoCommand)
         {
-            editCarInfoCommand.Validate();
-
             var result = await _vehicleService.UpdateInfoCar(editCarInfoCommand);
 
             return Ok(result);
         }
+
         [HttpGet("FilterCar")]
         public async Task<IActionResult> FilterCarAsync([FromQuery] FilterCarCommand filterCarCommand)
         {

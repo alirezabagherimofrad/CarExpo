@@ -20,6 +20,7 @@ public interface IUnitOfWork : IDisposable
     IOrderRepository OrderRepository { get; }
     IOrderItemRepository OrderItemRepository { get; }
     IPaymentRepository PaymentRepository { get; }
+    INotificationRepository NotificationRepository { get; }
     Task<int> SaveChangesAsync();
 }
 

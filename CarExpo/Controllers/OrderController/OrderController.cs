@@ -11,9 +11,9 @@ namespace CarExpo.Controllers.OrderController
     {
         private readonly IOrderService _orderService;
 
-        public OrderController(IOrderService _orderService)
+        public OrderController(IOrderService orderService)
         {
-            this._orderService = _orderService;
+            _orderService = orderService;
         }
 
         [HttpPost("OrderCar")]

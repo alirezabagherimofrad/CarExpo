@@ -1,9 +1,11 @@
-﻿using CarExpo.Domain.Interfaces.CarRepositories;
+﻿using CarExpo.Domain.Interfaces;
+using CarExpo.Domain.Interfaces.CarRepositories;
 using CarExpo.Domain.Interfaces.IGenericInterface;
 using CarExpo.Domain.Interfaces.OrderRpository;
 using CarExpo.Domain.Interfaces.PaymentInterface;
 using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
 using CarExpo.Domain.Interfaces.UserRepository;
+using CarExpo.Domain.Models;
 using CarExpo.Domain.Models.Orders;
 using CarExpo.Domain.Models.Payment;
 using CarExpo.Domain.Models.Users;
@@ -13,6 +15,7 @@ using CarExpo.Infrastructure.Repositories.Car_Repository;
 using CarExpo.Infrastructure.Repositories.Order_Repository;
 using CarExpo.Infrastructure.Repositories.Payment_Repository;
 using CarExpo.Infrastructure.Repositories.User_Repository;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,7 @@ namespace CarExpo.Infrastructure.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly UserManager<User> _userManager;
     private readonly DataBaseContext _context;
     private readonly Dictionary<Type, object> _repositories = new();
     private IUserRepository? _userRepository;
@@ -31,9 +35,11 @@ public class UnitOfWork : IUnitOfWork
     private IOrderRepository? _orderRepository;
     public IOrderItemRepository? _orderItemRepository;
     public IPaymentRepository? _paymentRepository;
-    public UnitOfWork(DataBaseContext context)
+    public INotificationRepository? _notificationRepository;
+    public UnitOfWork(DataBaseContext context, UserManager<User> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public IUserRepository UserRepository
@@ -41,7 +47,7 @@ public class UnitOfWork : IUnitOfWork
         get
         {
             if (_userRepository == null)
-                _userRepository = new UserRepository(_context);
+                _userRepository = new UserRepository(_context, _userManager);
 
             return _userRepository;
         }
@@ -99,6 +105,18 @@ public class UnitOfWork : IUnitOfWork
             return _paymentRepository;
         }
     }
+
+    public INotificationRepository NotificationRepository
+    {
+        get
+        {
+            if (_notificationRepository == null)
+                _notificationRepository = new NotificationRepository(_context);
+            return _notificationRepository;
+
+        }
+    }
+
     public void Dispose()
     {
         _context.Dispose();
@@ -108,7 +126,7 @@ public class UnitOfWork : IUnitOfWork
     {
         if (typeof(T) == typeof(User))
         {
-            _userRepository ??= new UserRepository(_context);
+            _userRepository ??= new UserRepository(_context, _userManager);
             return (IGenericRepository<T>)_userRepository;
         }
 
@@ -140,6 +158,12 @@ public class UnitOfWork : IUnitOfWork
         {
             _paymentRepository ??= new PaymentRepository(_context);
             return (IGenericRepository<T>)_paymentRepository;
+        }
+
+        if (typeof(T) == typeof(Notification))
+        {
+            _notificationRepository ??= new NotificationRepository(_context);
+            return (IGenericRepository<T>)_notificationRepository;
         }
 
         if (!_repositories.ContainsKey(typeof(T)))

@@ -14,7 +14,7 @@ namespace CarExpo.Application.Commands.Command.PaymentRequestCommand
         public Guid UserId { get; set; }
         public Guid OrderId { get; set; }
         public string? CardNumber { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public int? TotalPrice { get; set; }
         public void Validate()
         {
             if (!new PaymentRequestCommandValidator().Validate(this).IsValid)

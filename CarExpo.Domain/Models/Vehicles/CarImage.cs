@@ -8,23 +8,30 @@ namespace CarExpo.Domain.Models.Vehicles
 {
     public class CarImage
     {
-        public CarImage(string name, string path, Guid carId)
+        public CarImage()
+        {
+
+        }
+        public CarImage(string name, string path, Guid carId, Guid userid)
         {
             Id = Guid.NewGuid();
             Name = name;
             Path = path;
             CarId = carId;
+            UserId = userid;
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        public Guid CarId { get; set; }
+        public Guid UserId { get; private set; }
 
-        public string Name { get; set; }
+        public Guid CarId { get; private set; }
 
-        public string Path { get; set; }
+        public string Name { get; private set; }
 
-        public Car Car { get; set; }
+        public string Path { get; private set; }
+
+        public Car Car { get; private set; }
 
     }
 }

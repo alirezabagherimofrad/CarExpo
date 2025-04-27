@@ -11,9 +11,5 @@ namespace CarExpo.Domain.Interfaces.CarRepositories
     public interface ICarImageRepository : IGenericRepository<CarImage>
     {
 
-
-        Task<CarImage?> DownloadCarImageAsync(Guid Id);
-
-        Task<CarImage?> UploadImageAsync(Guid Id);
     }
 }

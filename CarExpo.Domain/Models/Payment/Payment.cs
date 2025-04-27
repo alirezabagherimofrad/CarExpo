@@ -16,15 +16,15 @@ namespace CarExpo.Domain.Models.Payment
             InvoiceNumber = GenerateInvoiceNumber();
             TrackingCode = GenerateTrackingCode();
         }
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public Guid CarId { get; set; }
-        public Guid OrderId { get; set; }
-        public string? CardNumber { get; set; }
-        public decimal? TotalPrice { get; set; }
-        public DateTime TimeOfpayment { get; set; }
-        public string InvoiceNumber { get; set; }
-        public string TrackingCode { get; set; }
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
+        public Guid CarId { get; private set; }
+        public Guid OrderId { get; private set; }
+        public string? CardNumber { get; private set; }
+        public int? TotalPrice { get; private set; }
+        public DateTime TimeOfpayment { get; private set; }
+        public string InvoiceNumber { get; private set; }
+        public string TrackingCode { get; private set; }
 
 
         public static readonly Random _random = new();

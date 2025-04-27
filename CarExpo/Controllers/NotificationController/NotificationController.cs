@@ -19,6 +19,7 @@ namespace CarExpo.Controllers.NotificationController
             _emailNotificationService = emailNotificationService;
             _unitOfWork = unitOfWork;
         }
+
         [HttpPost("SendEmailToUser")]
         public async Task<IActionResult> SendEmailToUser(Guid userId)
         {

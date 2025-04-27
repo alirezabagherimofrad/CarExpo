@@ -15,6 +15,7 @@ using CarExpo.Domain.Models.Brands;
 using CarExpo.Domain.Models.Orders;
 using System.Security.Cryptography.Pkcs;
 using CarExpo.Domain.Models.Payment;
+using CarExpo.Domain.Models;
 
 namespace CarExpo.Infrastructure.Context
 {
@@ -29,7 +30,9 @@ namespace CarExpo.Infrastructure.Context
         public DbSet<CarImage> CarImages { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Payment> payments { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<OtpEntry> OtpEntries { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

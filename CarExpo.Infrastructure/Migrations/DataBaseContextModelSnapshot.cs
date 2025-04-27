@@ -29,7 +29,6 @@ namespace CarExpo.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -39,69 +38,89 @@ namespace CarExpo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("41c6da2b-077a-4da1-b6e4-fbe6c24f5a46"),
+                            Id = new Guid("7349926e-60b6-4f58-ac36-67cb461aa640"),
                             Title = "Saipa"
                         },
                         new
                         {
-                            Id = new Guid("4c2f34aa-853b-4281-a282-ebf5a9811c34"),
+                            Id = new Guid("b733b3ca-ee5d-4af2-952d-443746691361"),
                             Title = "Kia"
                         },
                         new
                         {
-                            Id = new Guid("44da3b36-8684-4f03-a713-7354411862a4"),
+                            Id = new Guid("980976a5-9485-49d5-8396-04d2019c8687"),
                             Title = "Peugeot"
                         },
                         new
                         {
-                            Id = new Guid("e7439f07-65f0-4305-bb61-d2d4c145b51d"),
+                            Id = new Guid("390f7c29-b4c4-4505-94aa-88021d4d4645"),
                             Title = "Hyundai"
                         },
                         new
                         {
-                            Id = new Guid("d2b7e23e-b078-4f95-931d-eaf84d9d72dd"),
+                            Id = new Guid("86180bff-374d-4ab9-aad2-7a666679f611"),
                             Title = "Chery"
                         },
                         new
                         {
-                            Id = new Guid("46032581-acaf-45a4-b22c-ef6ebe51bcec"),
+                            Id = new Guid("0b9301ad-fcea-41d1-99c5-fb0bacb3ba38"),
                             Title = "Brilliance"
                         },
                         new
                         {
-                            Id = new Guid("011a1588-92ee-44a7-998e-957f2528cf40"),
+                            Id = new Guid("bd7e9736-cd23-41a0-8fbb-de98280ac9c9"),
                             Title = "Renault"
                         },
                         new
                         {
-                            Id = new Guid("fe131880-31e0-4de2-a39d-7cf97edb8aa5"),
+                            Id = new Guid("d015864e-0852-4c40-bebe-391bdf29aa56"),
                             Title = "Lifan"
                         },
                         new
                         {
-                            Id = new Guid("d7795a56-d254-4e01-a735-764b5f28cfa3"),
+                            Id = new Guid("64d692bd-4dab-4284-a461-82a4ab33837a"),
                             Title = "JAC"
                         },
                         new
                         {
-                            Id = new Guid("cc8989e4-67d0-4e06-83b7-06707bd187fa"),
+                            Id = new Guid("7e3953fa-ec12-44b3-a7ee-b7efd759dc87"),
                             Title = "BahmanMotor"
                         },
                         new
                         {
-                            Id = new Guid("3bdfbda7-f1c2-4bf2-b5bf-b8e152ef0657"),
+                            Id = new Guid("8f716ff3-afa1-4176-bad6-c51d908981b3"),
                             Title = "ParsKhodro"
                         },
                         new
                         {
-                            Id = new Guid("0b4f967f-f82a-43b6-8e5c-d636779b2890"),
+                            Id = new Guid("ea20a21b-1bf3-4bcc-a04b-463ba86c4547"),
                             Title = "ModiranKhodro"
                         },
                         new
                         {
-                            Id = new Guid("67c16414-d167-4d92-9659-1aa3cbc44f07"),
+                            Id = new Guid("c8cf2988-6cb3-42ed-a2d5-e13ef5d38d49"),
                             Title = "KermanMotor"
                         });
+                });
+
+            modelBuilder.Entity("CarExpo.Domain.Models.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("CarExpo.Domain.Models.Orders.Order", b =>
@@ -119,8 +138,8 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("TotalPrice")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -139,8 +158,8 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("TotalPrice")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -171,8 +190,8 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<DateTime>("TimeOfpayment")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("TotalPrice")
+                        .HasColumnType("int");
 
                     b.Property<string>("TrackingCode")
                         .IsRequired()
@@ -183,7 +202,7 @@ namespace CarExpo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("payments");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("CarExpo.Domain.Models.Users.User", b =>
@@ -224,8 +243,8 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<decimal>("LoyaltyPoints")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("LoyaltyPoints")
+                        .HasColumnType("int");
 
                     b.Property<int?>("LoyaltyStatus")
                         .HasColumnType("int");
@@ -296,39 +315,34 @@ namespace CarExpo.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Color")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LicensePlate")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ManufactureYear")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ManufactureYear")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("Mileage")
+                    b.Property<int?>("Mileage")
                         .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Salestatus")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("TotalPrice")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("VIN")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -356,6 +370,9 @@ namespace CarExpo.Infrastructure.Migrations
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

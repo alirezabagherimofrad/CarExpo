@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 using CarExpo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using CarExpo.Infrastructure.Repositories;
@@ -6,7 +6,6 @@ using CarExpo.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CarExpo.Application.Services.USER_SERVICE;
-using CarExpo.Application.Services.VEHICLE_SERVICE;
 using CarExpo.Application.Commands.CommandValidator.UserCommandValidator;
 using CarExpo.Application.Commands.CommandValidator.VehicleCommandValidator;
 using CarExpo.FilterException;
@@ -38,6 +37,11 @@ using CarExpo.Application.Mappings.OrderMap;
 using CarExpo.Application.Mappings.VehicleMapp;
 using CarExpo.Domain.Interfaces.IGenericInterface;
 using CarExpo.Domain.Interfaces.UnitOfWorkInterface;
+using CarExpo.Application.Services.VehicleService;
+using CarExpo.Infrastructure.Authentication;
+using CarExpo.Application.Services;
+using Microsoft.OpenApi.Models;
+using CarExpo.Application.Services.CarImageService;
 
 
 namespace CarExpo
@@ -71,6 +75,8 @@ namespace CarExpo
             })
            .AddEntityFrameworkStores<DataBaseContext>()
            .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddScoped<UserManager<User>>();
             builder.Services.AddScoped<IUserStore<User>, UserStore<User, IdentityRole<Guid>, DataBaseContext, Guid>>();
             builder.Services.AddScoped<SignInManager<User>>();
@@ -79,6 +85,8 @@ namespace CarExpo
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddSingleton(new MeliPayamakService("USERNAME", "PASSWORD"));
 
             builder.Services.AddScoped<ICarImageService, CarImageService>();
             builder.Services.AddScoped<ICarImageRepository, CarImageRepository>();
@@ -101,12 +109,36 @@ namespace CarExpo
 
             builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
 
-            builder.Services.AddScoped<IIAnalyticsService, IAnalyticsService>();
+            builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
             builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "CarExpo", Version = "v1" });
+
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "لطفاً 'Bearer YOUR_TOKEN' را وارد کنید",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                };
+
+                options.AddSecurityDefinition("Bearer", securityScheme);
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+    {  new OpenApiSecurityScheme {
+         Reference = new OpenApiReference {
+         Type = ReferenceType.SecurityScheme,
+         Id = "Bearer"
+    } }, new string[] { } }
+});
+            });
 
             builder.Services.AddControllers(options =>
             {
@@ -126,17 +158,19 @@ namespace CarExpo
                 app.UseSwaggerUI();
             }
 
-            using var scope = app.Services.CreateScope();
+            //using var scope = app.Services.CreateScope();
 
-            var services = scope.ServiceProvider;
+            //var services = scope.ServiceProvider;
 
-            var dbcontext = services.GetRequiredService<DataBaseContext>();
+            //var dbcontext = services.GetRequiredService<DataBaseContext>();
 
-            dbcontext.Database.EnsureCreated();
+            //dbcontext.Database.EnsureCreated();
 
-            dbcontext.Database.Migrate();
+            //dbcontext.Database.Migrate();
 
             app.UseHttpsRedirection();
+
+            app.UseAuthorization();
 
             app.UseAuthorization();
 

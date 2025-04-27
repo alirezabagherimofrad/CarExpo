@@ -12,9 +12,9 @@ namespace CarExpo.Application.Interfaces.Car_Interface
 {
     public interface ICarImageService
     {
-        Task UploadCarImage(IFormFile file, UploadCarImageCommand carImageCommand);
+        Task UploadCarImage(IFormFile file, UploadCarImageCommand UploadCarImageCommand);
 
         Task<FileContentResult> DownloadCarImageAsync(DownloadCarImageCommand carDownloadImageCommand);
-
+        Task<CarImage?> DeleteCarImage(RemoveCarCommand removeCarCommand);
     }
 }

@@ -21,14 +21,6 @@ namespace CarExpo.Infrastructure.Repositories.Car_Repository
         {
         }
 
-        public async Task<Car> AddCarAsync(Car car)
-        {
-            _context.Cars.Add(car);
-
-            await _context.SaveChangesAsync();
-
-            return car;
-        }
         public async Task<bool> IsExistAsync(Expression<Func<Car, bool>> predicate)
         {
             return await _context.Set<Car>().AnyAsync(predicate);
@@ -41,7 +33,7 @@ namespace CarExpo.Infrastructure.Repositories.Car_Repository
             return car;
         }
 
-        public async Task<List<Car>> FilterCarsAsync(string? Brand, string? Model, string? Color, string? ManufactureYear, decimal? Mileage, CarStatus? CarStatus)
+        public async Task<List<Car>> FilterCarsAsync(string? Brand, string? Model, string? Color, int? ManufactureYear, decimal? Mileage, CarStatus? CarStatus)
         {
             var search = _context.Cars.AsQueryable();
 
@@ -54,8 +46,8 @@ namespace CarExpo.Infrastructure.Repositories.Car_Repository
             if (!string.IsNullOrEmpty(Color))
                 search = search.Where(c => c.Color == Color);
 
-            if (!string.IsNullOrEmpty(ManufactureYear))
-                search = search.Where(c => c.Model == Model);
+            if (ManufactureYear.HasValue)
+                search = search.Where(c => c.ManufactureYear == ManufactureYear);
 
             if (Mileage.HasValue)
                 search = search.Where(c => c.Mileage == Mileage);

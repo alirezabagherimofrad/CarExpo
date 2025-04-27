@@ -18,22 +18,28 @@ namespace CarExpo.Controllers.CarController
         }
 
         [HttpPost("UploadCarImage")]
-        public async Task<IActionResult> UploadCarImageAsync([FromForm] CarImageDto carImageDto)
+        public async Task<IActionResult> UploadCarImageAsync([FromForm] UploadCarImageCommand UploadCarImageCommand)
         {
-            if (carImageDto.File == null || carImageDto.File.Length < 0)
+            if (UploadCarImageCommand.File == null || UploadCarImageCommand.File.Length < 0)
                 return BadRequest("فایل معتبر ارسال نشده");
 
-            var command = new UploadCarImageCommand { CarId = carImageDto.CarId };
-
-            await _carImageService.UploadCarImage(carImageDto.File, command);
+            await _carImageService.UploadCarImage(UploadCarImageCommand.File, UploadCarImageCommand);
 
             return Ok("تصویر با موفقیت آپلود شد");
         }
 
-        [HttpPost("DownloadCarImage")]
-        public async Task<IActionResult> DownloadCarImageAsync([FromBody] DownloadCarImageCommand carDownloadImageCommand)
+        [HttpGet("DownloadCarImage")]
+        public async Task<IActionResult> DownloadCarImageAsync([FromQuery] DownloadCarImageCommand carDownloadImageCommand)
         {
             var result = await _carImageService.DownloadCarImageAsync(carDownloadImageCommand);
+
+            return result;
+        }
+
+        [HttpDelete("DeleteCarImage")]
+        public async Task<IActionResult> DeleteCarImageAsync(RemoveCarCommand removeCarCommand)
+        {
+            var result = await _carImageService.DeleteCarImage(removeCarCommand);
 
             return Ok(result);
         }

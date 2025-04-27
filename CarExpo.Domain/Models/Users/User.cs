@@ -25,25 +25,69 @@ namespace CarExpo.Domain.Models.Users
             Cars = new List<Car>();
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        public string Password { get; set; }
+        public string Password { get; private set; }
 
-        public byte[]? File { get; set; }
+        public byte[]? File { get; private set; }
 
-        public string? FilePath { get; set; }
+        public string? FilePath { get; private set; }
 
-        public DateTime? BirthDate { get; set; }
+        public DateTime? BirthDate { get; private set; }
 
-        public string? NationalCode { get; set; }
+        public string? NationalCode { get; private set; }
 
-        public decimal LoyaltyPoints { get; set; } = 0;
-        public Loyaltystatus? LoyaltyStatus { get; set; }
-        public bool IsDeleted { get; set; }
+        public int? LoyaltyPoints { get; private set; }
 
-        public string? Otp { get; set; }
+        public loyaltystatus? LoyaltyStatus { get; private set; }
 
-        public DateTime? OtpExpiration { get; set; }
+        public bool IsDeleted { get; private set; }
+
+        public string? Otp { get; private set; }
+
+        public DateTime? OtpExpiration { get; private set; }
+
+        public void UpdatePassword(string newpassword)
+        {
+            Password = newpassword;
+        }
+
+        public void softdelete(bool softDelete)
+        {
+            IsDeleted = softDelete;
+        }
+
+        public void loyaltypoints(loyaltystatus loyaltystatus)
+        {
+            LoyaltyStatus = loyaltystatus;
+        }
+
+        public void loyalty(int points)
+        {
+            LoyaltyPoints += points;
+        }
+
+        public void otP(string otp)
+        {
+            Otp = otp;
+        }
+
+        public void time(DateTime otpexpiration)
+        {
+            OtpExpiration = otpexpiration;
+        }
+
+        public void EditInfo(string? email, string? phonenumber, string? password, string? nationalcode)
+        {
+            if (!string.IsNullOrEmpty(email) && email != "string")
+                Email = email;
+            if (string.IsNullOrEmpty(phonenumber) && phonenumber != "string")
+                PhoneNumber = phonenumber;
+            if (!string.IsNullOrEmpty(password) && password != "string")
+                Password = password;
+            if (!string.IsNullOrEmpty(nationalcode) && nationalcode != "string")
+                NationalCode = nationalcode;
+        }
 
         public string OtpGenerator()
         {
@@ -53,7 +97,7 @@ namespace CarExpo.Domain.Models.Users
         }
         public List<Car> Cars { get; set; }
 
-        public enum Loyaltystatus
+        public enum loyaltystatus
         {
             Boronz,
             Silver,

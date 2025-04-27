@@ -14,17 +14,6 @@ namespace CarExpo.Infrastructure.Repositories.Car_Repository
     {
         public CarImageRepository(DataBaseContext context) : base(context)
         {
-
-        }
-
-        public async Task<CarImage?> DownloadCarImageAsync(Guid Id)
-        {
-            return await _dbSet.FirstOrDefaultAsync(x => x.Id == Id);
-        }
-
-        public async Task<CarImage?> UploadImageAsync(Guid Id)
-        {
-            return await _dbSet.FirstOrDefaultAsync(x => x.Id == Id);
         }
     }
 }

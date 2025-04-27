@@ -14,8 +14,6 @@ namespace CarExpo.Application.Commands.Command.VehicleCommand
     {
         public Guid UserId { get; set; }
 
-        //public string Brand { get; set; }
-
         public Guid BrandId { get; set; }
 
         public string Model { get; set; }
@@ -26,15 +24,15 @@ namespace CarExpo.Application.Commands.Command.VehicleCommand
 
         public string VIN { get; set; }
 
-        public string ManufactureYear { get; set; }
+        public int ManufactureYear { get; set; }
 
-        public decimal Mileage { get; set; }
+        public int Mileage { get; set; }
 
         public CarStatus? CarStatus { get; set; }
 
         public salestatus? salestatus { get; set; }
 
-        public decimal? TotalPrice { get; set; }
+        public int? TotalPrice { get; set; }
 
         public void Validate()
         {

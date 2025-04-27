@@ -17,7 +17,5 @@ namespace CarExpo.Application.Interfaces.Car_Interface
 
         Task<List<Car>> FilterCars(FilterCarCommand carSearchCommand);
 
-        Task<Brand> BrandAsync(Brand brand);
-
     }
 }

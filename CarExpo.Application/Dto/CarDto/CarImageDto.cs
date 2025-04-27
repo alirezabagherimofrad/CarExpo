@@ -10,6 +10,7 @@ namespace CarExpo.Application.Dto.CarDto
     public class CarImageDto
     {
         public Guid CarId { get; set; }
+        public Guid UserId { get; set; }
         public IFormFile File { get; set; }
     }
 }

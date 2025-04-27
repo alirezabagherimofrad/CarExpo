@@ -14,7 +14,8 @@ namespace CarExpo.Application.Commands.Command.UserCommand
 
         public string? PhoneNumber { get; set; }
 
-        public string? Otp { get; set; }
+        public string? Nationalcode { get; set; }
 
+        public string? Otp { get; set; }
     }
 }

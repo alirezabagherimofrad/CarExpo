@@ -13,13 +13,12 @@ namespace CarExpo.Domain.Interfaces.CarRepositories
 {
     public interface IVehicleRepository : IGenericRepository<Car>
     {
-        Task<Car> AddCarAsync(Car car);
 
         Task<bool> IsExistAsync(Expression<Func<Car, bool>> predicate);
 
         Task<Car> EditCarInfoAsyncc(Car car);
 
-        Task<List<Car>> FilterCarsAsync(string? Brand, string? Model, string? Color, string? ManufactureYear, decimal? Mileage, CarStatus? CarStatus);
+        Task<List<Car>> FilterCarsAsync(string? Brand, string? Model, string? Color, int? ManufactureYear, decimal? Mileage, CarStatus? CarStatus);
 
         Task<Brand> GetByBrand(Guid Id);
         Task AddBrandAsync(Brand brand);
