@@ -66,13 +66,7 @@ namespace CarExpo.Controllers.UserController
             return Ok("کد یکبار مصرف با موفقیت ارسال شد");
         }
 
-        //[HttpPost("VerifyOtp")]
-        //public async Task<IActionResult> VerifyOtpCodeAsync([FromBody] VerifyOtpCommand verifyOtpCommand)
-        //{
-        //    var userverify = await _otpService.VerifyOtp(verifyOtpCommand);
-
-        //    return Ok("رمز یکبار مصرف درست وارد شد");
-        //}
+        
 
         [HttpPut("UpdateUserInfo")]
         public async Task<IActionResult> UpdateUserInfo([FromBody] UpdateUserInformatiobCommand updateUserInfoCommand)

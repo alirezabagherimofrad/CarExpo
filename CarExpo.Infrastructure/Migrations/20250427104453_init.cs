@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarExpo.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,6 +101,22 @@ namespace CarExpo.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OtpEntries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpireAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsUsed = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OtpEntries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,11 +250,11 @@ namespace CarExpo.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManufactureYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManufactureYear = table.Column<int>(type: "int", nullable: true),
                     Mileage = table.Column<int>(type: "int", precision: 18, scale: 2, nullable: true),
                     CarStatus = table.Column<int>(type: "int", nullable: true),
                     Salestatus = table.Column<int>(type: "int", nullable: true),
@@ -309,19 +325,19 @@ namespace CarExpo.Infrastructure.Migrations
                 columns: new[] { "Id", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("1d8d8711-d88f-4bbb-9f05-c12a074553ae"), "Chery" },
-                    { new Guid("4d2703a2-7617-40d7-b9e0-b782d7ab7b4b"), "Hyundai" },
-                    { new Guid("5bb6311c-0f04-4a32-890c-c938d648e9ae"), "Brilliance" },
-                    { new Guid("60cb4c68-af99-4ecd-9e63-1361a6985a5a"), "Peugeot" },
-                    { new Guid("636f269a-0291-4216-bbdf-4ddad973838d"), "Saipa" },
-                    { new Guid("7887867c-d743-4832-ac10-fea573076cb2"), "Lifan" },
-                    { new Guid("7cb42f1f-fa31-4667-8c82-0c9cb311e7fb"), "Kia" },
-                    { new Guid("8ebafb5f-564e-459c-a42d-97cfeb420f84"), "KermanMotor" },
-                    { new Guid("94cf3284-9b60-4d38-8015-6779af15a3cb"), "BahmanMotor" },
-                    { new Guid("96fa1610-3d3d-4cbf-8da1-c4f2ce5d37eb"), "JAC" },
-                    { new Guid("bb850f46-49e7-44d3-acd6-3036ec35ba71"), "ModiranKhodro" },
-                    { new Guid("e46a0887-a9e4-4692-9468-63b767ce0fb4"), "ParsKhodro" },
-                    { new Guid("f8f2bf07-e192-4dc6-9f71-1b8cab289f5c"), "Renault" }
+                    { new Guid("15e5fdb3-b0d3-4da9-a138-f65df2f239c5"), "Chery" },
+                    { new Guid("48d6f066-0942-4dbd-bd41-e8c00e937ab0"), "Brilliance" },
+                    { new Guid("6f83082b-7c0b-469e-a038-cd0985fdc14d"), "Peugeot" },
+                    { new Guid("728e2525-130c-4806-96f1-ef4857c2ee0e"), "Saipa" },
+                    { new Guid("914e4f86-d1f3-41aa-99de-67c25c8a6157"), "Renault" },
+                    { new Guid("92ef2c9a-25b9-44b3-afa8-d535af636eb9"), "Hyundai" },
+                    { new Guid("9f8a89bc-a8e7-4ab4-a6ac-6d910a9469e8"), "Lifan" },
+                    { new Guid("a218b9a7-97ea-4945-ab2b-6f0885245086"), "BahmanMotor" },
+                    { new Guid("af7ba8fa-a125-4343-a5f8-143c63bc3a50"), "KermanMotor" },
+                    { new Guid("b2fa9814-788d-4cb2-afba-1e5d2f05d63c"), "ParsKhodro" },
+                    { new Guid("cd5254db-6ca9-43c4-a562-22ec3fa5acc4"), "JAC" },
+                    { new Guid("e5a70fcc-a761-4416-a992-4e07c3224fd4"), "ModiranKhodro" },
+                    { new Guid("f9dd9de7-5f60-4d59-893b-f92d4c8b6f44"), "Kia" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -410,6 +426,9 @@ namespace CarExpo.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
+
+            migrationBuilder.DropTable(
+                name: "OtpEntries");
 
             migrationBuilder.DropTable(
                 name: "Payments");

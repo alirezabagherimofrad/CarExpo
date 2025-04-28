@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarExpo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20250425141347_Init2")]
-    partial class Init2
+    [Migration("20250427104453_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,67 +41,67 @@ namespace CarExpo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7349926e-60b6-4f58-ac36-67cb461aa640"),
+                            Id = new Guid("728e2525-130c-4806-96f1-ef4857c2ee0e"),
                             Title = "Saipa"
                         },
                         new
                         {
-                            Id = new Guid("b733b3ca-ee5d-4af2-952d-443746691361"),
+                            Id = new Guid("f9dd9de7-5f60-4d59-893b-f92d4c8b6f44"),
                             Title = "Kia"
                         },
                         new
                         {
-                            Id = new Guid("980976a5-9485-49d5-8396-04d2019c8687"),
+                            Id = new Guid("6f83082b-7c0b-469e-a038-cd0985fdc14d"),
                             Title = "Peugeot"
                         },
                         new
                         {
-                            Id = new Guid("390f7c29-b4c4-4505-94aa-88021d4d4645"),
+                            Id = new Guid("92ef2c9a-25b9-44b3-afa8-d535af636eb9"),
                             Title = "Hyundai"
                         },
                         new
                         {
-                            Id = new Guid("86180bff-374d-4ab9-aad2-7a666679f611"),
+                            Id = new Guid("15e5fdb3-b0d3-4da9-a138-f65df2f239c5"),
                             Title = "Chery"
                         },
                         new
                         {
-                            Id = new Guid("0b9301ad-fcea-41d1-99c5-fb0bacb3ba38"),
+                            Id = new Guid("48d6f066-0942-4dbd-bd41-e8c00e937ab0"),
                             Title = "Brilliance"
                         },
                         new
                         {
-                            Id = new Guid("bd7e9736-cd23-41a0-8fbb-de98280ac9c9"),
+                            Id = new Guid("914e4f86-d1f3-41aa-99de-67c25c8a6157"),
                             Title = "Renault"
                         },
                         new
                         {
-                            Id = new Guid("d015864e-0852-4c40-bebe-391bdf29aa56"),
+                            Id = new Guid("9f8a89bc-a8e7-4ab4-a6ac-6d910a9469e8"),
                             Title = "Lifan"
                         },
                         new
                         {
-                            Id = new Guid("64d692bd-4dab-4284-a461-82a4ab33837a"),
+                            Id = new Guid("cd5254db-6ca9-43c4-a562-22ec3fa5acc4"),
                             Title = "JAC"
                         },
                         new
                         {
-                            Id = new Guid("7e3953fa-ec12-44b3-a7ee-b7efd759dc87"),
+                            Id = new Guid("a218b9a7-97ea-4945-ab2b-6f0885245086"),
                             Title = "BahmanMotor"
                         },
                         new
                         {
-                            Id = new Guid("8f716ff3-afa1-4176-bad6-c51d908981b3"),
+                            Id = new Guid("b2fa9814-788d-4cb2-afba-1e5d2f05d63c"),
                             Title = "ParsKhodro"
                         },
                         new
                         {
-                            Id = new Guid("ea20a21b-1bf3-4bcc-a04b-463ba86c4547"),
+                            Id = new Guid("e5a70fcc-a761-4416-a992-4e07c3224fd4"),
                             Title = "ModiranKhodro"
                         },
                         new
                         {
-                            Id = new Guid("c8cf2988-6cb3-42ed-a2d5-e13ef5d38d49"),
+                            Id = new Guid("af7ba8fa-a125-4343-a5f8-143c63bc3a50"),
                             Title = "KermanMotor"
                         });
                 });
@@ -169,6 +169,33 @@ namespace CarExpo.Infrastructure.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("CarExpo.Domain.Models.OtpEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OtpEntries");
                 });
 
             modelBuilder.Entity("CarExpo.Domain.Models.Payment.Payment", b =>

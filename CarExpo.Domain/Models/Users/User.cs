@@ -15,17 +15,21 @@ namespace CarExpo.Domain.Models.Users
 
         }
 
-        public User(string password, string phoneNumber, string email)
+        public User(string password, string phoneNumber, string email,string nationalCode)
         {
             Id = Guid.NewGuid();
             Email = email;
             UserName = email;
             PhoneNumber = phoneNumber;
+            NationalCode = nationalCode;
             Password = password;
             Cars = new List<Car>();
+            EmailConfirmed = true;
+            PhoneNumberConfirmed = true;
         }
+       
 
-        public Guid Id { get; private set; }
+        public Guid Id { get;  set; }
 
         public string Password { get; private set; }
 
@@ -35,7 +39,7 @@ namespace CarExpo.Domain.Models.Users
 
         public DateTime? BirthDate { get; private set; }
 
-        public string? NationalCode { get; private set; }
+        public string? NationalCode { get;  set; }
 
         public int? LoyaltyPoints { get; private set; }
 
@@ -75,6 +79,10 @@ namespace CarExpo.Domain.Models.Users
         public void time(DateTime otpexpiration)
         {
             OtpExpiration = otpexpiration;
+        }
+        public void SetNationalCode(string nationalCode)
+        {
+            NationalCode = nationalCode;
         }
 
         public void EditInfo(string? email, string? phonenumber, string? password, string? nationalcode)

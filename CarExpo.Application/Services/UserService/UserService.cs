@@ -51,7 +51,6 @@ namespace CarExpo.Application.Services.USER_SERVICE
                 throw new Exception("این ایمیل قبلاً ثبت شده است.");
 
             var phoneExists = await _unitOfWork.UserRepository.IsExistAsync(u => u.PhoneNumber == registerCommand.PhoneNumber);
-
             if (phoneExists)
                 throw new Exception("این شماره موبایل قبلاً ثبت شده است.");
 
@@ -59,11 +58,19 @@ namespace CarExpo.Application.Services.USER_SERVICE
 
             var result = await _userManager.CreateAsync(user, registerCommand.Password);
 
+            if (!result.Succeeded)
+            {
+                throw new Exception("خطا در ثبت‌نام: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
+
+            
+            
+
             var registerDto = _mapper.Map<RegisterDto>(user);
 
             return registerDto;
-
         }
+
 
 
         public async Task<bool> LoginWithOtpAsync(string phoneNumber, string password)

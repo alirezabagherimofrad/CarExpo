@@ -25,11 +25,15 @@ namespace CarExpo.Infrastructure.Authentication
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Key);
 
             var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+                throw new Exception("کاربر یافت نشد.");
+
             var roles = await _userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>
     {
-        new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+        new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+        new Claim(ClaimTypes.Name, user.UserName ?? user.Email ?? user.PhoneNumber ?? string.Empty)
     };
 
             foreach (var role in roles)
@@ -39,14 +43,16 @@ namespace CarExpo.Infrastructure.Authentication
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),  // استفاده از claims که شامل رول‌ها هست
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1), 
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
+                
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
 
     }
 }
